@@ -38,6 +38,7 @@ const questions = (state = INITIAL_STATE, action) => {
       error: action.errorMsg,
       questionObj: {
         response_code: 3,
+        results: [],
       },
     };
   default:
