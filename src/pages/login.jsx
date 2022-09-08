@@ -36,7 +36,7 @@ class Login extends Component {
 
     dispatch(newLogin({ name, email }));
 
-    history.push('/');
+    history.push('/game');
   };
 
   render() {
