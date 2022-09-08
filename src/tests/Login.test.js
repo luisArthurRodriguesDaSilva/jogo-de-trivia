@@ -2,7 +2,7 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
 import mockedTokenResponse from './helpers/mockedTokenResponse';
-import renderWithRouterAndRedux from './helpers/renderWith';
+import renderWithRouterAndRedux from './helpers/renderWithRouterAndRedux'
 
 
 describe('login tests', () => {
