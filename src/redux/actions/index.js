@@ -28,7 +28,7 @@ export const fetchToken = () => async (dispatch) => {
 };
 
 const requestQuestion = () => ({ type: REQUEST_QUESTION });
-const currentQuestion = (tokenObj) => ({ type: CURRENT_QUESTION, tokenObj });
+const currentQuestion = (questionObj) => ({ type: CURRENT_QUESTION, questionObj });
 const failedQuestion = (errorMsg) => ({ type: FAILED_QUESTION, errorMsg });
 
 export const fetchQuestion = (token) => async (dispatch) => {

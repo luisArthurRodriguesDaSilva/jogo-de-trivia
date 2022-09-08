@@ -19,11 +19,11 @@ class Game extends Component {
   }
 
   async componentDidMount() {
-    const { dispatch, token, results } = this.props;
+    const { dispatch, token, results, response_code } = this.props;
     const { indexQuestion, actualQuestion } = this.state;
 
     await dispatch(fetchQuestion(token));
-    console.log(results);
+    console.log(this.props);
   }
 
   render() {
