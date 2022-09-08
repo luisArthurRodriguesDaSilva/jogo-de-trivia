@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import logo from './trivia.png';
 import './App.css';
-import Login from './pages/login';
+import Login from './pages/Login';
 import Game from './pages/game';
 import Settings from './pages/settings';
 
