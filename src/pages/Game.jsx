@@ -4,10 +4,26 @@ import PropTypes from 'prop-types';
 import { fetchQuestion } from '../redux/actions';
 
 class Game extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      indexQuestion: 0,
+      actualQuestion: [
+        {
+          quest: '',
+          isCorrect: false,
+        },
+      ],
+    };
+  }
+
   async componentDidMount() {
-    const { dispatch, token } = this.props;
+    const { dispatch, token, results } = this.props;
+    const { indexQuestion, actualQuestion } = this.state;
 
     await dispatch(fetchQuestion(token));
+    console.log(results);
   }
 
   render() {
@@ -22,8 +38,9 @@ Game.propTypes = {
   token: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = ({ token: { tokenObj } }) => ({
+const mapStateToProps = ({ token: { tokenObj }, questions: { questionObj } }) => ({
   ...tokenObj,
+  ...questionObj,
 });
 
 export default connect(mapStateToProps)(Game);
