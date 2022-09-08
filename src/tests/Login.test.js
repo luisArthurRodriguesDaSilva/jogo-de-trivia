@@ -1,21 +1,24 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
+import mockedTokenResponse from './helpers/mockedTokenResponse';
 import renderWithRouterAndRedux from './helpers/renderWith';
+
 
 describe('login tests', () => {
   beforeEach(() => {
     global.fetch = jest.fn().mockReturnValue({
-      json: jest.fn().mockReturnValue({}), 
+      json: jest.fn().mockReturnValue(mockedTokenResponse), 
     }); 
     renderWithRouterAndRedux(<App />);
   });
+
+  const [validEmail, validName] = ['joaozinhoDoMinecraft@gmail.com', 'adimin4002'];
 
   it('verify if the play button is enabled and disabled as expected', ()=>{
     const emailInput = screen.getByTestId('input-gravatar-email');
     const nameInput = screen.getByTestId('input-player-name');
     const playBtn = screen.getByTestId('btn-play');
-    const [validEmail, validName] = ['joaozinhoDoMinecraft@gmail.com', 'adimin4002'];
 
     expect(emailInput).toBeInTheDocument();
     expect(nameInput).toBeInTheDocument();
@@ -37,5 +40,16 @@ describe('login tests', () => {
     expect(playBtn).toBeDisabled();
   });
 
-  it('verify if the play button works as expected', )
+  it('verify if the play button works as expected', async () => {
+    const emailInput = screen.getByTestId('input-gravatar-email');
+    const nameInput = screen.getByTestId('input-player-name');
+    const playBtn = screen.getByTestId('btn-play');
+
+    userEvent.type(emailInput, validEmail);
+    userEvent.type(nameInput, validName);
+    userEvent.click(playBtn);
+    expect(global.fetch).toBeCalledWith('https://opentdb.com/api_token.php?command=request');
+    await waitFor(() => expect(global.fetch).toHaveBeenCalledTimes(1));
+    // await (await waitFor(() => expect(window.localStorage.getItem('token').toBe(mockedTokenResponse.token))))
+  });
 });
