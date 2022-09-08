@@ -52,4 +52,10 @@ describe('login tests', () => {
     await waitFor(() => expect(global.fetch).toHaveBeenCalledTimes(1));
     // await (await waitFor(() => expect(window.localStorage.getItem('token').toBe(mockedTokenResponse.token))))
   });
+
+  it('verify if the settings button works as expected',()=>{
+    const settingsBtn = screen.getByTestId('btn-settings');
+    userEvent.click(settingsBtn);
+    expect(screen.getByTestId('settings-title')).toBeInTheDocument();
+  });
 });
