@@ -26,6 +26,7 @@ class Game extends Component {
     const RANGE = 0.5;
     const TEMP = 3;
     const randomIndexArray = [0, 1, 2, TEMP].sort(() => Math.random() - RANGE);
+    const randomBoolIndexArray = [0, 1].sort(() => Math.random() - RANGE);
 
     await dispatch(fetchQuestion(token));
     const { results } = this.props;
@@ -37,13 +38,17 @@ class Game extends Component {
       if (orderAnswer.length > 2) {
         this.setState({ randomAnswer: disorderAnswer });
       } else if (orderAnswer.length > 0) {
-        const valueTrue = results[indexQuestion].correct_answer;
-        const valueFalse = results[indexQuestion].incorrect_answers[0];
-
-        this.setState({ randomAnswer: [
-          { answer: 'True', isCorrect: valueTrue === 'True' },
-          { answer: 'False', isCorrect: valueFalse === 'True' },
-        ] });
+        if (randomBoolIndexArray[0] === 0) {
+          this.setState({ randomAnswer: [
+            { answer: 'True', isCorrect: results[indexQuestion].correct_answer }, // false
+            { answer: 'False', isCorrect: results[indexQuestion].incorrect_answers[0] }, // true
+          ] });
+        } else {
+          this.setState({ randomAnswer: [
+            { answer: 'False', isCorrect: results[indexQuestion].incorrect_answers[0] }, // true
+            { answer: 'True', isCorrect: results[indexQuestion].correct_answer }, // false
+          ] });
+        }
       }
     }
   }
@@ -56,7 +61,7 @@ class Game extends Component {
 
     const orderAnswer = [{ answer: results[index].correct_answer, isCorrect: true }];
 
-    results[index].incorrect_answers.forEach((item) => {
+    array[index].incorrect_answers.forEach((item) => {
       orderAnswer.push({ answer: item, isCorrect: false });
     });
 
@@ -85,10 +90,12 @@ class Game extends Component {
                 <div data-testid="answer-options">
                   {
                     randomAnswer.map((item, index) => {
-                      if (!item.isCorrect) indexWrongAnswer += 1;
+                      if (results[indexQuestion].correct_answer !== item.answer) {
+                        indexWrongAnswer += 1;
+                      }
 
                       return (
-                        (item.isCorrect)
+                        (results[indexQuestion].correct_answer === item.answer)
                           ? (
                             <button
                               key={ index }
