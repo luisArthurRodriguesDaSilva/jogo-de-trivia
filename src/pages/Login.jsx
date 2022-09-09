@@ -47,6 +47,11 @@ class Login extends Component {
     history.push('/game');
   };
 
+  handleClickSettings = () => {
+    const { history } = this.props;
+    history.push('/settings');
+  };
+
   render() {
     const { name, email, isDisabled } = this.state;
 
