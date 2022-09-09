@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { fetchQuestion } from '../redux/actions';
 import { delToken } from '../services/saveToken';
+import Header from '../components/Header';
 
 class Game extends Component {
   constructor() {
@@ -96,6 +97,7 @@ class Game extends Component {
 
     return (
       <main>
+        <Header />
         {(indexQuestion === 0) && (<p>new game</p>)}
         {
           (responseCode === ERROR_API_CODE) && (delToken())
