@@ -9,9 +9,9 @@ class Game extends Component {
 
     this.state = {
       indexQuestion: 0,
-      actualQuestion: [
+      randomAnswer: [
         {
-          quest: '',
+          answer: '',
           isCorrect: false,
         },
       ],
@@ -19,12 +19,25 @@ class Game extends Component {
   }
 
   async componentDidMount() {
-    const { dispatch, token, results, response_code } = this.props;
-    const { indexQuestion, actualQuestion } = this.state;
+    const { dispatch, token } = this.props;
+    const { randomAnswer } = this.state;
 
     await dispatch(fetchQuestion(token));
-    console.log(this.props);
+
+    this.buildOrderAnswer(0);
   }
+
+  buildOrderAnswer = (index) => {
+    const { results } = this.props;
+    const orderAnswer = [{ answer: results[index].correct_answer, isCorrect: true }];
+
+    results[index].incorrect_answers.forEach((item) => {
+      orderAnswer.push({ answer: item, isCorrect: false });
+    });
+
+    console.log(orderAnswer);
+    return orderAnswer;
+  };
 
   render() {
     return (
