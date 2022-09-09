@@ -37,12 +37,12 @@ class Game extends Component {
       if (orderAnswer.length > 2) {
         this.setState({ randomAnswer: disorderAnswer });
       } else if (orderAnswer.length > 0) {
-        const valueTrue = results[indexQuestion].correct_answer.toLowerCase();
-        const valueFalse = results[indexQuestion].incorrect_answers[0].toLowerCase();
+        const valueTrue = results[indexQuestion].correct_answer;
+        const valueFalse = results[indexQuestion].incorrect_answers[0];
 
         this.setState({ randomAnswer: [
-          { answer: 'True', isCorrect: valueTrue === 'true' },
-          { answer: 'False', isCorrect: valueFalse === 'true' },
+          { answer: 'True', isCorrect: valueTrue === 'True' },
+          { answer: 'False', isCorrect: valueFalse === 'True' },
         ] });
       }
     }
