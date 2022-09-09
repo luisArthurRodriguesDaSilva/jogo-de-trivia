@@ -5,6 +5,7 @@ import { Redirect } from 'react-router-dom';
 import { fetchQuestion } from '../redux/actions';
 import { delToken } from '../services/saveToken';
 import Header from '../components/Header';
+import Timer from '../components/Timer';
 
 class Game extends Component {
   constructor() {
@@ -98,6 +99,9 @@ class Game extends Component {
     return (
       <main>
         <Header />
+        {!isAnswer && <Timer
+          handleClickAnswer={ this.handleClickAnswer }
+        />}
         {(indexQuestion === 0) && (<p>new game</p>)}
         {
           (responseCode === ERROR_API_CODE) && (delToken())
@@ -123,6 +127,7 @@ class Game extends Component {
                               type="button"
                               data-testid="correct-answer"
                               onClick={ this.handleClickAnswer }
+                              disabled={ isAnswer }
                             >
                               {item.answer}
                             </button>
@@ -133,6 +138,7 @@ class Game extends Component {
                               type="button"
                               data-testid={ `wrong-answer-${indexWrongAnswer}` }
                               onClick={ this.handleClickAnswer }
+                              disabled={ isAnswer }
                             >
                               {item.answer}
                             </button>
