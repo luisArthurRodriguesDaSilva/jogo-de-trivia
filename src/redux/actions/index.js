@@ -5,6 +5,7 @@ export const FAILED_REQUEST = 'FAILED_REQUEST';
 export const REQUEST_QUESTION = 'REQUEST_QUESTION';
 export const CURRENT_QUESTION = 'CURRENT_QUESTION';
 export const FAILED_QUESTION = 'FAILED_QUESTION';
+export const USER_SCORE = 'USER_SCORE';
 
 export const newLogin = (payLoad) => ({
   type: NEW_LOGIN,
@@ -45,3 +46,8 @@ export const fetchQuestion = (token) => async (dispatch) => {
     dispatch(failedQuestion(erro.message));
   }
 };
+
+export const userScore = (payLoad) => ({
+  type: USER_SCORE,
+  payLoad,
+});
