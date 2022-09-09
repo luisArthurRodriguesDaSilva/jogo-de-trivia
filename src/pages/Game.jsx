@@ -29,7 +29,7 @@ class Game extends Component {
     await dispatch(fetchQuestion(token));
     const { results } = this.props;
 
-    if (token !== 'invalid') {
+    if (token !== '') {
       const orderAnswer = this.buildOrderAnswer(indexQuestion);
       const disorderAnswer = randomIndexArray.map((i) => orderAnswer[i]);
 
