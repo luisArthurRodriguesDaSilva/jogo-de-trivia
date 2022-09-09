@@ -93,7 +93,7 @@ class Game extends Component {
 
     return (
       <main>
-        <p>new game</p>
+        {(indexQuestion === 0) && (<p>new game</p>)}
         {
           (responseCode === ERROR_API_CODE) && (delToken())
         }
