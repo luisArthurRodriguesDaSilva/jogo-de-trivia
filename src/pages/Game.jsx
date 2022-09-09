@@ -51,7 +51,6 @@ class Game extends Component {
     }
   }
 
-  // testewsahwaqqyaqgawadafaae
   buildOrderAnswer = (index) => {
     const { results } = this.props;
     const orderAnswer = [{ answer: results[index].correct_answer, isCorrect: true }];
