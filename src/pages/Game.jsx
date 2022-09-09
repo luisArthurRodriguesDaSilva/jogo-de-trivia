@@ -17,6 +17,7 @@ class Game extends Component {
           isCorrect: false,
         },
       ],
+      isAnswer: false,
     };
   }
 
@@ -65,8 +66,26 @@ class Game extends Component {
     }
   };
 
+  handleClickAnswer = () => {
+    this.setState({ isAnswer: true });
+  };
+
+  handleClickNext = () => {
+    const { indexQuestion } = this.state;
+    const { results } = this.props;
+    const MAX_QUESTIONS = 4;
+
+    if (indexQuestion < MAX_QUESTIONS) {
+      this.setState({ indexQuestion: indexQuestion + 1 }, () => {
+        this.shuffleAnswer(indexQuestion + 1, results);
+      });
+    } else {
+      // end game!
+    }
+  };
+
   render() {
-    const { randomAnswer, indexQuestion } = this.state;
+    const { randomAnswer, indexQuestion, isAnswer } = this.state;
     const { results, responseCode } = this.props;
     const START_INDEX = -1;
     const ERROR_API_CODE = 3;
@@ -98,6 +117,7 @@ class Game extends Component {
                               key={ index }
                               type="button"
                               data-testid="correct-answer"
+                              onClick={ this.handleClickAnswer }
                             >
                               {item.answer}
                             </button>
@@ -107,6 +127,7 @@ class Game extends Component {
                               key={ index }
                               type="button"
                               data-testid={ `wrong-answer-${indexWrongAnswer}` }
+                              onClick={ this.handleClickAnswer }
                             >
                               {item.answer}
                             </button>
@@ -115,6 +136,15 @@ class Game extends Component {
                     })
                   }
                 </div>
+                {(isAnswer) && (
+                  <button
+                    type="button"
+                    data-testid="btn-next"
+                    onClick={ this.handleClickNext }
+                  >
+                    Next
+                  </button>
+                )}
               </section>
             )
         }
