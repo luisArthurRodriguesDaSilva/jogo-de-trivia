@@ -27,7 +27,7 @@ class Game extends Component {
     const TEMP = 3;
     const randomIndexArray = [0, 1, 2, TEMP].sort(() => Math.random() - RANGE);
 
-    await dispatch(fetchQuestion(''));
+    await dispatch(fetchQuestion(token));
     const { results } = this.props;
 
     if (token !== '') {
@@ -50,6 +50,10 @@ class Game extends Component {
 
   buildOrderAnswer = (index) => {
     const { results } = this.props;
+    const array = results;
+
+    if (array.length === 0) return [];
+
     const orderAnswer = [{ answer: results[index].correct_answer, isCorrect: true }];
 
     results[index].incorrect_answers.forEach((item) => {
