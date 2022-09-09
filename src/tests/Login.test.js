@@ -50,7 +50,7 @@ describe('login tests', () => {
     userEvent.click(playBtn);
     expect(global.fetch).toBeCalledWith('https://opentdb.com/api_token.php?command=request');
     await waitFor(() => expect(global.fetch).toHaveBeenCalledTimes(1));
-    // await (await waitFor(() => expect(window.localStorage.getItem('token').toBe(mockedTokenResponse.token))))
+    await waitFor(() => expect(window.localStorage.getItem('token')).toBe(mockedTokenResponse.token))
   });
 
   it('verify if the settings button works as expected',()=>{
