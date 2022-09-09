@@ -23,35 +23,40 @@ class Game extends Component {
   async componentDidMount() {
     const { dispatch, token } = this.props;
     const { indexQuestion } = this.state;
+
+    await dispatch(fetchQuestion(token));
+
+    if (token !== '') {
+      this.setRandomAnswer(indexQuestion);
+    }
+  }
+
+  setRandomAnswer = (index) => {
+    const { results } = this.props;
     const RANGE = 0.5;
     const TEMP = 3;
     const randomIndexArray = [0, 1, 2, TEMP].sort(() => Math.random() - RANGE);
     const randomBoolIndexArray = [0, 1].sort(() => Math.random() - RANGE);
 
-    await dispatch(fetchQuestion(token));
-    const { results } = this.props;
+    const orderAnswer = this.buildOrderAnswer(index);
+    const disorderAnswer = randomIndexArray.map((i) => orderAnswer[i]);
 
-    if (token !== '') {
-      const orderAnswer = this.buildOrderAnswer(indexQuestion);
-      const disorderAnswer = randomIndexArray.map((i) => orderAnswer[i]);
-
-      if (orderAnswer.length > 2) {
-        this.setState({ randomAnswer: disorderAnswer });
-      } else if (orderAnswer.length > 0) {
-        if (randomBoolIndexArray[0] === 0) {
-          this.setState({ randomAnswer: [
-            { answer: 'True', isCorrect: results[indexQuestion].correct_answer }, // false
-            { answer: 'False', isCorrect: results[indexQuestion].incorrect_answers[0] }, // true
-          ] });
-        } else {
-          this.setState({ randomAnswer: [
-            { answer: 'False', isCorrect: results[indexQuestion].incorrect_answers[0] }, // true
-            { answer: 'True', isCorrect: results[indexQuestion].correct_answer }, // false
-          ] });
-        }
+    if (orderAnswer.length > 2) {
+      this.setState({ randomAnswer: disorderAnswer });
+    } else if (orderAnswer.length > 0) {
+      if (randomBoolIndexArray[0] === 0) {
+        this.setState({ randomAnswer: [
+          { answer: 'True', isCorrect: results[index].correct_answer }, // false
+          { answer: 'False', isCorrect: results[index].incorrect_answers[0] }, // true
+        ] });
+      } else {
+        this.setState({ randomAnswer: [
+          { answer: 'False', isCorrect: results[index].incorrect_answers[0] }, // true
+          { answer: 'True', isCorrect: results[index].correct_answer }, // false
+        ] });
       }
     }
-  }
+  };
 
   buildOrderAnswer = (index) => {
     const { results } = this.props;
