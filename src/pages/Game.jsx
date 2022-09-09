@@ -24,7 +24,8 @@ class Game extends Component {
     const { dispatch, token } = this.props;
     const { indexQuestion } = this.state;
     const RANGE = 0.5;
-    const randomIndexArray = [0, 1, 2, 3].sort(() => Math.random() - RANGE);
+    const TEMP = 3;
+    const randomIndexArray = [0, 1, 2, TEMP].sort(() => Math.random() - RANGE);
 
     await dispatch(fetchQuestion(''));
     const { results } = this.props;
