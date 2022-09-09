@@ -160,15 +160,14 @@ Game.propTypes = {
   dispatch: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
   responseCode: PropTypes.number.isRequired,
-  results: PropTypes.shape({
+  results: PropTypes.arrayOf(PropTypes.shape({
     category: PropTypes.string,
     correct_answer: PropTypes.string,
     difficulty: PropTypes.string,
     question: PropTypes.string,
     type: PropTypes.string,
     incorrect_answers: PropTypes.arrayOf(PropTypes.string),
-
-  }).isRequired,
+  })).isRequired,
 };
 
 const mapStateToProps = ({ token: { tokenObj }, questions }) => {
