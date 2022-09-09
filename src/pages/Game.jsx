@@ -22,18 +22,21 @@ class Game extends Component {
   }
 
   async componentDidMount() {
+    this.newGame();
+  }
+
+  newGame = async () => {
     const { dispatch, token } = this.props;
-    const { indexQuestion } = this.state;
 
     await dispatch(fetchQuestion(token));
     this.setState({ indexQuestion: 0 }, () => {
       const { results, responseCode } = this.props;
 
       if (responseCode === 0) {
-        this.shuffleAnswer(indexQuestion, results);
+        this.shuffleAnswer(0, results);
       }
     });
-  }
+  };
 
   buildOrderAnswer = (index, array) => {
     if (array.length === 0) return [];
