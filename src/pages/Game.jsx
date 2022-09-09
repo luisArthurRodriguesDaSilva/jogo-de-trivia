@@ -13,7 +13,7 @@ class Game extends Component {
       indexQuestion: 0,
       randomAnswer: [
         {
-          answer: 'teste',
+          answer: '',
           isCorrect: false,
         },
       ],
@@ -26,7 +26,7 @@ class Game extends Component {
     const RANGE = 0.5;
     const randomIndexArray = [0, 1, 2, 3].sort(() => Math.random() - RANGE);
 
-    await dispatch(fetchQuestion(token));
+    await dispatch(fetchQuestion(''));
     const { results } = this.props;
 
     if (token !== '') {
