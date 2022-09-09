@@ -51,32 +51,45 @@ class Login extends Component {
     const { name, email, isDisabled } = this.state;
 
     return (
-      <form onSubmit={ this.handleClick }>
-        <input
-          type="text"
-          name="name"
-          id="name"
-          value={ name }
-          placeholder="nome"
-          data-testid="input-player-name"
-          onChange={ this.handleChange }
-        />
-        <input
-          type="email"
-          name="email"
-          id="email"
-          value={ email }
-          placeholder="email"
-          data-testid="input-gravatar-email"
-          onChange={ this.handleChange }
-        />
-        <input
-          type="submit"
-          value="Play"
-          disabled={ isDisabled }
-          data-testid="btn-play"
-        />
-      </form>
+      <div>
+
+        <form onSubmit={ this.handleClick }>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            value={ name }
+            placeholder="nome"
+            data-testid="input-player-name"
+            onChange={ this.handleChange }
+          />
+          <input
+            type="email"
+            name="email"
+            id="email"
+            value={ email }
+            placeholder="email"
+            data-testid="input-gravatar-email"
+            onChange={ this.handleChange }
+          />
+          <input
+            type="submit"
+            value="Play"
+            disabled={ isDisabled }
+            data-testid="btn-play"
+          />
+        </form>
+
+        <div>
+          <button
+            data-testid="btn-settings"
+            type="button"
+            onClick={ this.handleClickSettings }
+          >
+            Settings
+          </button>
+        </div>
+      </div>
     );
   }
 }
