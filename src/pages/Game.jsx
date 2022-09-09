@@ -35,7 +35,7 @@ class Game extends Component {
 
       if (orderAnswer.length > 2) {
         this.setState({ randomAnswer: disorderAnswer });
-      } else {
+      } else if (orderAnswer.length > 0) {
         const valueTrue = results[indexQuestion].correct_answer.toLowerCase();
         const valueFalse = results[indexQuestion].incorrect_answers[0].toLowerCase();
 
