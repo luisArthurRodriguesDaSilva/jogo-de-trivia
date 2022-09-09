@@ -78,11 +78,6 @@ class Game extends Component {
               <section>
                 <h2 data-testid="question-category">{results[indexQuestion].category}</h2>
                 <p data-testid="question-text">{results[indexQuestion].question}</p>
-                <p>
-                  teste:
-                  {' '}
-                  {randomAnswer[0].answer}
-                </p>
                 <div data-testid="answer-options">
                   {
                     randomAnswer.map((item, index) => {
