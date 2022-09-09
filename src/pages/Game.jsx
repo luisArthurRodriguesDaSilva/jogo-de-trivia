@@ -5,7 +5,6 @@ import { Redirect } from 'react-router-dom';
 import { fetchQuestion, userScore } from '../redux/actions';
 import { delToken } from '../services/saveToken';
 import Header from '../components/Header';
-// import user from '../redux/reducers/user';
 
 class Game extends Component {
   constructor() {
