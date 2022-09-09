@@ -3,7 +3,7 @@ import { REQUEST_TOKEN, CURRENT_TOKEN, FAILED_REQUEST } from '../actions';
 const INITIAL_STATE = {
   isFetching: false,
   tokenObj: {
-    token: '',
+    token: 'invalid',
   },
   error: '',
 };
@@ -27,7 +27,7 @@ const token = (state = INITIAL_STATE, action) => {
       isFetching: true,
       error: action.errorMsg,
       tokenObj: {
-        token: '',
+        token: 'invalid',
       },
     };
   default:

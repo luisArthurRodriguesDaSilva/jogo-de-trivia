@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import { fetchQuestion } from '../redux/actions';
+import { delToken } from '../services/saveToken';
 
 class Game extends Component {
   constructor() {
@@ -25,21 +27,22 @@ class Game extends Component {
     const randomIndexArray = [0, 1, 2, 3].sort(() => Math.random() - RANGE);
 
     await dispatch(fetchQuestion(token));
+    console.log(token);
 
-    const orderAnswer = this.buildOrderAnswer(indexQuestion);
-    const disorderAnswer = randomIndexArray.map((i) => orderAnswer[i]);
-    console.log(orderAnswer);
+    if (token !== 'invalid') {
+      const orderAnswer = this.buildOrderAnswer(indexQuestion);
+      const disorderAnswer = randomIndexArray.map((i) => orderAnswer[i]);
 
-    if (orderAnswer.length > 2) {
-      this.setState({ randomAnswer: disorderAnswer });
-    } else {
-      this.setState({ randomAnswer: orderAnswer });
+      if (orderAnswer.length > 2) {
+        this.setState({ randomAnswer: disorderAnswer });
+      } else {
+        this.setState({ randomAnswer: orderAnswer });
+      }
     }
   }
 
   buildOrderAnswer = (index) => {
     const { results } = this.props;
-    console.log(results);
     const orderAnswer = [{ answer: results[index].correct_answer, isCorrect: true }];
 
     results[index].incorrect_answers.forEach((item) => {
@@ -51,47 +54,57 @@ class Game extends Component {
 
   render() {
     const { randomAnswer, indexQuestion } = this.state;
-    const { results } = this.props;
+    const { results, response_code: responseCode } = this.props;
     const START_INDEX = -1;
+    const ERROR_API_CODE = 3;
     let indexWrongAnswer = START_INDEX;
-    console.log(randomAnswer);
 
     return (
       <main>
         <p>new game</p>
-        <h2 data-testid="question-category">{results[indexQuestion].category}</h2>
-        <p data-testid="question-text">{results[indexQuestion].question}</p>
-        <ul data-testid="answer-options">
-          {
-            randomAnswer.map((item) => {
-              indexWrongAnswer += 1;
-
-              return (
-                <li key={ item.answer }>
+        {
+          (responseCode === ERROR_API_CODE) && (delToken())
+        }
+        {
+          (responseCode === ERROR_API_CODE) ? (<Redirect to="/" />)
+            : (
+              <section>
+                <h2 data-testid="question-category">{results[indexQuestion].category}</h2>
+                <p data-testid="question-text">{results[indexQuestion].question}</p>
+                <ul data-testid="answer-options">
                   {
-                    (item.isCorrect)
-                      ? (
-                        <button
-                          type="button"
-                          data-testid="correct-answer"
-                        >
-                          {item.answer}
-                        </button>
-                      )
-                      : (
-                        <button
-                          type="button"
-                          data-testid={ `wrong-answer-${indexWrongAnswer}` }
-                        >
-                          {item.answer}
-                        </button>
-                      )
+                    randomAnswer.map((item) => {
+                      indexWrongAnswer += 1;
+
+                      return (
+                        <li key={ item.answer }>
+                          {
+                            (item.isCorrect)
+                              ? (
+                                <button
+                                  type="button"
+                                  data-testid="correct-answer"
+                                >
+                                  {item.answer}
+                                </button>
+                              )
+                              : (
+                                <button
+                                  type="button"
+                                  data-testid={ `wrong-answer-${indexWrongAnswer}` }
+                                >
+                                  {item.answer}
+                                </button>
+                              )
+                          }
+                        </li>
+                      );
+                    })
                   }
-                </li>
-              );
-            })
-          }
-        </ul>
+                </ul>
+              </section>
+            )
+        }
       </main>
     );
   }
@@ -101,11 +114,11 @@ Game.propTypes = {
   dispatch: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
   results: PropTypes.shape({
-    category: PropTypes.string.isRequired,
-    correct_answer: PropTypes.string.isRequired,
-    difficulty: PropTypes.string.isRequired,
-    question: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
+    category: PropTypes.string,
+    correct_answer: PropTypes.string,
+    difficulty: PropTypes.string,
+    question: PropTypes.string,
+    type: PropTypes.string,
     incorrect_answers: PropTypes.arrayOf(PropTypes.string),
 
   }).isRequired,
