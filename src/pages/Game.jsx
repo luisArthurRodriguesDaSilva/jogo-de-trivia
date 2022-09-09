@@ -13,7 +13,7 @@ class Game extends Component {
       indexQuestion: 0,
       randomAnswer: [
         {
-          answer: '',
+          answer: 'teste',
           isCorrect: false,
         },
       ],
@@ -27,7 +27,7 @@ class Game extends Component {
     const randomIndexArray = [0, 1, 2, 3].sort(() => Math.random() - RANGE);
 
     await dispatch(fetchQuestion(token));
-    console.log(token);
+    const { results } = this.props;
 
     if (token !== 'invalid') {
       const orderAnswer = this.buildOrderAnswer(indexQuestion);
@@ -36,11 +36,21 @@ class Game extends Component {
       if (orderAnswer.length > 2) {
         this.setState({ randomAnswer: disorderAnswer });
       } else {
-        this.setState({ randomAnswer: orderAnswer });
+        const valueTrue = results[indexQuestion].correct_answer.toLowerCase();
+        const valueFalse = results[indexQuestion].incorrect_answers[0].toLowerCase();
+
+        this.setState({ randomAnswer: [
+          { answer: 'True', isCorrect: valueTrue === 'true' },
+          { answer: 'False', isCorrect: valueFalse === 'true' },
+        ] });
+
+        console.log(valueTrue);
+        console.log(valueFalse);
       }
     }
   }
 
+  // testewsahwaqqyaqgawadafaae
   buildOrderAnswer = (index) => {
     const { results } = this.props;
     const orderAnswer = [{ answer: results[index].correct_answer, isCorrect: true }];
@@ -54,7 +64,7 @@ class Game extends Component {
 
   render() {
     const { randomAnswer, indexQuestion } = this.state;
-    const { results, response_code: responseCode } = this.props;
+    const { results, responseCode } = this.props;
     const START_INDEX = -1;
     const ERROR_API_CODE = 3;
     let indexWrongAnswer = START_INDEX;
@@ -71,37 +81,40 @@ class Game extends Component {
               <section>
                 <h2 data-testid="question-category">{results[indexQuestion].category}</h2>
                 <p data-testid="question-text">{results[indexQuestion].question}</p>
-                <ul data-testid="answer-options">
+                <p>
+                  teste:
+                  {' '}
+                  {randomAnswer[0].answer}
+                </p>
+                <div data-testid="answer-options">
                   {
-                    randomAnswer.map((item) => {
-                      indexWrongAnswer += 1;
+                    randomAnswer.map((item, index) => {
+                      if (!item.isCorrect) indexWrongAnswer += 1;
 
                       return (
-                        <li key={ item.answer }>
-                          {
-                            (item.isCorrect)
-                              ? (
-                                <button
-                                  type="button"
-                                  data-testid="correct-answer"
-                                >
-                                  {item.answer}
-                                </button>
-                              )
-                              : (
-                                <button
-                                  type="button"
-                                  data-testid={ `wrong-answer-${indexWrongAnswer}` }
-                                >
-                                  {item.answer}
-                                </button>
-                              )
-                          }
-                        </li>
+                        (item.isCorrect)
+                          ? (
+                            <button
+                              key={ index }
+                              type="button"
+                              data-testid="correct-answer"
+                            >
+                              {item.answer}
+                            </button>
+                          )
+                          : (
+                            <button
+                              key={ index }
+                              type="button"
+                              data-testid={ `wrong-answer-${indexWrongAnswer}` }
+                            >
+                              {item.answer}
+                            </button>
+                          )
                       );
                     })
                   }
-                </ul>
+                </div>
               </section>
             )
         }
@@ -113,6 +126,7 @@ class Game extends Component {
 Game.propTypes = {
   dispatch: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
+  responseCode: PropTypes.number.isRequired,
   results: PropTypes.shape({
     category: PropTypes.string,
     correct_answer: PropTypes.string,
@@ -124,9 +138,14 @@ Game.propTypes = {
   }).isRequired,
 };
 
-const mapStateToProps = ({ token: { tokenObj }, questions: { questionObj } }) => ({
-  ...tokenObj,
-  ...questionObj,
-});
+const mapStateToProps = ({ token: { tokenObj }, questions }) => {
+  const { response_code: responseCode, results } = questions;
+
+  return ({
+    ...tokenObj,
+    responseCode,
+    results,
+  });
+};
 
 export default connect(mapStateToProps)(Game);
