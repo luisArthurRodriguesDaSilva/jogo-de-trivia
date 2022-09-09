@@ -5,6 +5,7 @@ import { Redirect } from 'react-router-dom';
 import { fetchQuestion, userScore } from '../redux/actions';
 import { delToken } from '../services/saveToken';
 import Header from '../components/Header';
+import Timer from '../components/Timer';
 
 class Game extends Component {
   constructor() {
@@ -88,7 +89,7 @@ class Game extends Component {
     const MAX_QUESTIONS = 4;
 
     if (indexQuestion < MAX_QUESTIONS) {
-      this.setState({ indexQuestion: indexQuestion + 1 }, () => {
+      this.setState({ indexQuestion: indexQuestion + 1, isAnswer: false }, () => {
         const { score } = this.state;
         dispatch(userScore(score));
         this.shuffleAnswer(indexQuestion + 1, results);
@@ -108,6 +109,9 @@ class Game extends Component {
     return (
       <main>
         <Header />
+        {!isAnswer && <Timer
+          handleClickAnswer={ this.handleClickAnswer }
+        />}
         {(indexQuestion === 0) && (<p>new game</p>)}
         {
           (responseCode === ERROR_API_CODE) && (delToken())
@@ -134,6 +138,7 @@ class Game extends Component {
                               data-testid="correct-answer"
                               name={ item.answer }
                               onClick={ this.handleClickAnswer }
+                              disabled={ isAnswer }
                             >
                               {item.answer}
                             </button>
@@ -145,6 +150,7 @@ class Game extends Component {
                               data-testid={ `wrong-answer-${indexWrongAnswer}` }
                               name={ item.answer }
                               onClick={ this.handleClickAnswer }
+                              disabled={ isAnswer }
                             >
                               {item.answer}
                             </button>
