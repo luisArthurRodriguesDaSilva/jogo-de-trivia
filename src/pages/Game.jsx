@@ -44,9 +44,6 @@ class Game extends Component {
           { answer: 'True', isCorrect: valueTrue === 'true' },
           { answer: 'False', isCorrect: valueFalse === 'true' },
         ] });
-
-        console.log(valueTrue);
-        console.log(valueFalse);
       }
     }
   }
