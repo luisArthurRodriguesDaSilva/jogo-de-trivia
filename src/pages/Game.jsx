@@ -80,7 +80,7 @@ class Game extends Component {
     const MAX_QUESTIONS = 4;
 
     if (indexQuestion < MAX_QUESTIONS) {
-      this.setState({ indexQuestion: indexQuestion + 1 }, () => {
+      this.setState({ indexQuestion: indexQuestion + 1, isAnswer: false }, () => {
         this.shuffleAnswer(indexQuestion + 1, results);
       });
     } else {
