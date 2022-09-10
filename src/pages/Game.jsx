@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
-import { fetchQuestion } from '../redux/actions';
+import { fetchQuestion, userScore } from '../redux/actions';
 import { delToken } from '../services/saveToken';
+import Header from '../components/Header';
+import Timer from '../components/Timer';
 
 class Game extends Component {
   constructor() {
@@ -18,6 +20,7 @@ class Game extends Component {
         },
       ],
       isAnswer: false,
+      score: 0,
     };
   }
 
@@ -69,21 +72,32 @@ class Game extends Component {
     }
   };
 
-  handleClickAnswer = () => {
-    this.setState({ isAnswer: true });
+  handleClickAnswer = ({ target: { name } }) => {
+    this.setState({ isAnswer: true }, () => {
+      const { randomAnswer } = this.state;
+      const filterRadomAnswer = randomAnswer
+        .filter(({ isCorrect }) => isCorrect === true);
+      if (name === filterRadomAnswer[0].answer) {
+        this.setState((prevState) => ({
+          score: prevState.score + 1,
+        }));
+      }
+    });
   };
 
   handleClickNext = () => {
     const { indexQuestion } = this.state;
-    const { results } = this.props;
+    const { results, dispatch, history } = this.props;
     const MAX_QUESTIONS = 4;
 
     if (indexQuestion < MAX_QUESTIONS) {
-      this.setState({ indexQuestion: indexQuestion + 1 }, () => {
+      this.setState({ indexQuestion: indexQuestion + 1, isAnswer: false }, () => {
+        const { score } = this.state;
+        dispatch(userScore(score));
         this.shuffleAnswer(indexQuestion + 1, results);
       });
     } else {
-      // end game!
+      history.push('/feedback');
     }
   };
 
@@ -96,6 +110,10 @@ class Game extends Component {
 
     return (
       <main>
+        <Header />
+        {!isAnswer && <Timer
+          handleClickAnswer={ this.handleClickAnswer }
+        />}
         {(indexQuestion === 0) && (<p>new game</p>)}
         {
           (responseCode === ERROR_API_CODE) && (delToken())
@@ -120,7 +138,9 @@ class Game extends Component {
                               key={ index }
                               type="button"
                               data-testid="correct-answer"
+                              name={ item.answer }
                               onClick={ this.handleClickAnswer }
+                              disabled={ isAnswer }
                             >
                               {item.answer}
                             </button>
@@ -130,7 +150,9 @@ class Game extends Component {
                               key={ index }
                               type="button"
                               data-testid={ `wrong-answer-${indexWrongAnswer}` }
+                              name={ item.answer }
                               onClick={ this.handleClickAnswer }
+                              disabled={ isAnswer }
                             >
                               {item.answer}
                             </button>
@@ -160,14 +182,16 @@ Game.propTypes = {
   dispatch: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
   responseCode: PropTypes.number.isRequired,
-  results: PropTypes.shape({
+  results: PropTypes.arrayOf(PropTypes.shape({
     category: PropTypes.string,
     correct_answer: PropTypes.string,
     difficulty: PropTypes.string,
     question: PropTypes.string,
     type: PropTypes.string,
     incorrect_answers: PropTypes.arrayOf(PropTypes.string),
-
+  })).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
   }).isRequired,
 };
 
