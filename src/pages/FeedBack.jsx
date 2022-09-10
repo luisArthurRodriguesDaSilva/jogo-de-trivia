@@ -6,12 +6,20 @@ const VALUE_FEEDBACK = 3;
 
 class FeedBack extends Component {
   render() {
-    const { totalHits } = this.props;
+    const { totalHits, history } = this.props;
+
     return (
       <div>
         {totalHits >= VALUE_FEEDBACK
           ? <p data-testid="feedback-text">Well Done!</p>
           : <p data-testid="feedback-text">Could be better...</p>}
+        <button
+          type="button"
+          data-testid="btn-ranking"
+          onClick={ () => history.push('/ranking') }
+        >
+          Ranking
+        </button>
       </div>
     );
   }
@@ -23,6 +31,9 @@ const mapStateToProps = ({ score }) => ({
 
 FeedBack.propTypes = {
   totalHits: PropTypes.number.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default connect(mapStateToProps)(FeedBack);
