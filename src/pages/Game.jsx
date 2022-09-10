@@ -20,7 +20,7 @@ class Game extends Component {
         },
       ],
       isAnswer: false,
-      score: 0,
+      score: 1,
     };
   }
 
@@ -81,24 +81,14 @@ class Game extends Component {
         .filter(({ isCorrect }) => isCorrect === true);
 
       if (name === filterRadomAnswer[0].answer) {
-        dispatch(userScore(score));
         this.setState((prevState) => ({
           score: prevState.score + 1,
-        }));
+        }), async () => {
+          console.log(score);
+          await dispatch(userScore(score));
+        });
       }
     });
-
-    // const { randomAnswer } = this.state;
-    // const filterRadomAnswer = randomAnswer
-    //   .filter(({ isCorrect }) => isCorrect === true);
-
-    // if (name === filterRadomAnswer[0].answer) {
-    //   this.setState((prevState) => ({
-    //     score: prevState.score + 1,
-    //   }), () => {
-    //     this.setState({ isAnswer: true });
-    //   });
-    // }
   };
 
   handleClickNext = () => {
@@ -111,9 +101,7 @@ class Game extends Component {
         this.shuffleAnswer(indexQuestion + 1, results);
       });
     } else {
-      this.setState({ isAnswer: false }, () => {
-        history.push('/feedback');
-      });
+      history.push('/feedback');
     }
   };
 
