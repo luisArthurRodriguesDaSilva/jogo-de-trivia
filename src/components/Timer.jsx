@@ -21,7 +21,7 @@ class Timer extends React.Component {
   timeIsEnd = () => {
     const { handleClickAnswer } = this.props;
     clearInterval(this.setTimeCount);
-    handleClickAnswer();
+    handleClickAnswer({ target: { name: 'Timer' } });
   };
 
   render() {
