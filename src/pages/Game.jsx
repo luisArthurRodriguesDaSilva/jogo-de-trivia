@@ -84,7 +84,6 @@ class Game extends Component {
         this.setState((prevState) => ({
           score: prevState.score + 1,
         }), async () => {
-          console.log(score);
           await dispatch(userScore(score));
         });
       }
