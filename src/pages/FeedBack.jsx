@@ -12,6 +12,7 @@ class FeedBack extends Component {
         {totalHits >= VALUE_FEEDBACK
           ? <p data-testid="feedback-text">Well Done!</p>
           : <p data-testid="feedback-text">Could be better...</p>}
+        <p>{ totalHits }</p>
       </div>
     );
   }

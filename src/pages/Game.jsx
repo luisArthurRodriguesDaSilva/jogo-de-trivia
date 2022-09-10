@@ -74,30 +74,46 @@ class Game extends Component {
 
   handleClickAnswer = ({ target: { name } }) => {
     this.setState({ isAnswer: true }, () => {
+      const { score } = this.state;
+      const { dispatch } = this.props;
       const { randomAnswer } = this.state;
       const filterRadomAnswer = randomAnswer
         .filter(({ isCorrect }) => isCorrect === true);
+
       if (name === filterRadomAnswer[0].answer) {
+        dispatch(userScore(score));
         this.setState((prevState) => ({
           score: prevState.score + 1,
         }));
       }
     });
+
+    // const { randomAnswer } = this.state;
+    // const filterRadomAnswer = randomAnswer
+    //   .filter(({ isCorrect }) => isCorrect === true);
+
+    // if (name === filterRadomAnswer[0].answer) {
+    //   this.setState((prevState) => ({
+    //     score: prevState.score + 1,
+    //   }), () => {
+    //     this.setState({ isAnswer: true });
+    //   });
+    // }
   };
 
   handleClickNext = () => {
     const { indexQuestion } = this.state;
-    const { results, dispatch, history } = this.props;
+    const { results, history } = this.props;
     const MAX_QUESTIONS = 4;
 
     if (indexQuestion < MAX_QUESTIONS) {
       this.setState({ indexQuestion: indexQuestion + 1, isAnswer: false }, () => {
-        const { score } = this.state;
-        dispatch(userScore(score));
         this.shuffleAnswer(indexQuestion + 1, results);
       });
     } else {
-      history.push('/feedback');
+      this.setState({ isAnswer: false }, () => {
+        history.push('/feedback');
+      });
     }
   };
 
