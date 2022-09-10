@@ -75,7 +75,9 @@ class Game extends Component {
   handleClickAnswer = ({ target: { name } }) => {
     this.setState({ isAnswer: true }, () => {
       const { randomAnswer } = this.state;
-      if (name === randomAnswer[0].answer) {
+      const filterRadomAnswer = randomAnswer
+        .filter(({ isCorrect }) => isCorrect === true);
+      if (name === filterRadomAnswer[0].answer) {
         this.setState((prevState) => ({
           score: prevState.score + 1,
         }));
@@ -190,9 +192,6 @@ Game.propTypes = {
   })).isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
-  }).isRequired,
-  tokenObj: PropTypes.shape({
-    token: PropTypes.string.isRequired,
   }).isRequired,
 };
 
