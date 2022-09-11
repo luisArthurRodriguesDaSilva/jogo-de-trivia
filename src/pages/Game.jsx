@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
-import { fetchQuestion, userScore } from '../redux/actions';
+import { fetchQuestion, userScore, addPlayerScore } from '../redux/actions';
 import { delToken } from '../services/saveToken';
 import Header from '../components/Header';
 import Timer from '../components/Timer';
@@ -21,6 +21,7 @@ class Game extends Component {
       ],
       isAnswer: false,
       score: 1,
+      time: 0,
     };
   }
 
@@ -72,11 +73,10 @@ class Game extends Component {
     }
   };
 
-  handleClickAnswer = ({ target: { name } }) => {
+  handleClickAnswer = ({ target: { name } }, difficulty = 'nothing here') => {
     this.setState({ isAnswer: true }, () => {
-      const { score } = this.state;
       const { dispatch } = this.props;
-      const { randomAnswer } = this.state;
+      const { randomAnswer, score } = this.state;
       const filterRadomAnswer = randomAnswer
         .filter(({ isCorrect }) => isCorrect === true);
 
@@ -84,11 +84,15 @@ class Game extends Component {
         this.setState((prevState) => ({
           score: prevState.score + 1,
         }), async () => {
+          const { time } = this.state;
           await dispatch(userScore(score));
+          await dispatch(addPlayerScore(time, difficulty));
         });
       }
     });
   };
+
+  setTime = (newTime) => this.setState({ time: newTime });
 
   handleClickNext = () => {
     const { indexQuestion } = this.state;
@@ -116,6 +120,7 @@ class Game extends Component {
         <Header />
         {!isAnswer && <Timer
           handleClickAnswer={ this.handleClickAnswer }
+          setTime={ this.setTime }
         />}
         {(indexQuestion === 0) && (<p>new game</p>)}
         {
@@ -142,7 +147,10 @@ class Game extends Component {
                               type="button"
                               data-testid="correct-answer"
                               name={ item.answer }
-                              onClick={ this.handleClickAnswer }
+                              onClick={ (e) => {
+                                const { difficulty } = results[indexQuestion];
+                                this.handleClickAnswer(e, difficulty);
+                              } }
                               disabled={ isAnswer }
                             >
                               {item.answer}
@@ -200,7 +208,6 @@ Game.propTypes = {
 
 const mapStateToProps = ({ token: { tokenObj }, questions }) => {
   const { response_code: responseCode, results } = questions;
-
   return ({
     ...tokenObj,
     responseCode,

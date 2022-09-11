@@ -14,13 +14,23 @@ class Timer extends React.Component {
 
   componentDidMount() {
     this.setTimeCount = setInterval(() => {
-      this.setState((previewState) => ({ timerCount: previewState.timerCount - 1 }));
+      this.setState(
+        (previewState) => ({ timerCount: previewState.timerCount - 1 }),
+        () => {
+          const { timerCount } = this.state;
+          const { setTime } = this.props;
+          setTime(timerCount);
+        },
+      );
     }, ONE_SECOND);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.setTimeCount);
   }
 
   timeIsEnd = () => {
     const { handleClickAnswer } = this.props;
-    clearInterval(this.setTimeCount);
     handleClickAnswer({ target: { name: 'Timer' } });
   };
 
@@ -33,6 +43,7 @@ class Timer extends React.Component {
 
 Timer.propTypes = {
   handleClickAnswer: PropTypes.func.isRequired,
+  setTime: PropTypes.func.isRequired,
 };
 
 export default connect()(Timer);
