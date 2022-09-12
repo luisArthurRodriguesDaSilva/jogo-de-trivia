@@ -21,9 +21,8 @@ const loseQuestion = async () => {
 };
 
 const gainQuestion = async () => {
-  await sleep(200);
+  await sleep(1100);
   userEvent.click(screen.getByTestId('correct-answer'));
-  await sleep(200);
   userEvent.click(screen.getByTestId('btn-next'));
 };
 
@@ -70,9 +69,9 @@ describe('feedbacks page tests', ()=>{
   });
 
   it('verify if the user feedback data is in the document', async () => {
-    await generateScoreGame(5);
+    await generateScoreGame(3);
     expect(screen.getByTestId('header-player-name').textContent).toBe(validName);
-    expect(screen.getByTestId('feedback-total-score').textContent).toBe('350');
-    expect(screen.getByTestId('feedback-total-question').textContent).toBe('5');
+    expect(screen.getByTestId('feedback-total-score').textContent).toBe('204');
+    expect(screen.getByTestId('feedback-total-question').textContent).toBe('3');
   });
 });

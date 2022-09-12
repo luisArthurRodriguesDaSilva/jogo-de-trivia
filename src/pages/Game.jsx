@@ -21,7 +21,7 @@ class Game extends Component {
       ],
       isAnswer: false,
       score: 1,
-      time: 0,
+      time: 30,
     };
   }
 
