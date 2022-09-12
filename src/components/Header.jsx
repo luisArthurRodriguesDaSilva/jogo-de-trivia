@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 class Header extends React.Component {
   render() {
-    const { name, email, totalHits } = this.props;
+    const { name, email, totalScore } = this.props;
 
     return (
       <header>
@@ -15,7 +15,7 @@ class Header extends React.Component {
           data-testid="header-profile-picture"
         />
         <p data-testid="header-player-name">{name}</p>
-        <p data-testid="header-score">{totalHits}</p>
+        <p data-testid="header-score">{totalScore}</p>
 
       </header>
     );
@@ -26,12 +26,13 @@ const mapStateToProps = (state) => ({
   name: state.user.name,
   email: state.user.email,
   ...state.score,
+  totalScore: state.player.score,
 });
 
 Header.propTypes = {
   name: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
-  totalHits: PropTypes.number.isRequired,
+  totalScore: PropTypes.number.isRequired,
 };
 
 export default connect(mapStateToProps)(Header);

@@ -24,6 +24,7 @@ const questions = (state = INITIAL_STATE, action) => {
       isFetching: true,
     };
   case CURRENT_QUESTION:
+    console.log(action.questionObj);
     return {
       ...state,
       ...action.questionObj,
