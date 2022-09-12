@@ -32,7 +32,7 @@ const generateScoreGame = async (gains) =>{
   await repeatFuncNTimes(loseQuestion,loses);
 };
 
-describe('feedbacks page tests', ()=>{
+describe('feedbacks page tests part1', ()=>{
   beforeEach(()=>{
     global.fetch = jest.fn().mockReturnValue({
       json: jest.fn().mockReturnValue(questionsResponse), 
@@ -73,5 +73,57 @@ describe('feedbacks page tests', ()=>{
     expect(screen.getByTestId('header-player-name').textContent).toBe(validName);
     expect(screen.getByTestId('feedback-total-score').textContent).toBe('204');
     expect(screen.getByTestId('feedback-total-question').textContent).toBe('3');
+  });
+
+  it('verify if the ranking button works as expected', async () => {
+    await generateScoreGame(1);
+    const btnRanking = screen.getByTestId('btn-ranking');
+    userEvent.click(btnRanking);
+    expect(screen.getByTestId('ranking-title').textContent).toBe('Ranking');
+  });
+
+});
+
+describe('feedback pages test part2',()=>{
+  beforeEach(()=>{
+    global.fetch = jest.fn().mockReturnValue({
+      json: jest.fn().mockReturnValue(questionsResponse), 
+    });
+  });
+
+  it('verify if the play again button work as expected', async ()=>{
+    const { store } = renderWithRouterAndRedux(<App />, {
+      initialEntries: ['/game'],
+      initialState: {
+          user: {
+            name: validName,
+            email: validEmail,
+          },
+          token: {
+            isFetching: false,
+            tokenObj: {
+              response_code: 0,
+              response_message: 'Token Generated Successfully!',
+              token: '84e0fce4b4d2966a83c6b52cad893076c434fd29d754a1c4b7ec3894c1c6d313'
+            },
+            error: ''
+          },
+      }
+    });
+    
+    await generateScoreGame(2); // in the end it will be change
+    userEvent.click(screen.getByTestId('btn-play-again'));
+
+    const emailInput = screen.getByTestId('input-gravatar-email');
+    const nameInput = screen.getByTestId('input-player-name');
+    const playBtn = screen.getByTestId('btn-play');
+
+    expect(playBtn).toBeInTheDocument();
+    expect(nameInput).toBeInTheDocument();
+    expect(emailInput).toBeInTheDocument();
+
+    expect(store.getState().player).toEqual({score: 0 , assertions: 0});
+
+    // aprender a trocar o mock de acordo com a chamada pra fzr a proxima parte
   });
 });
