@@ -5,7 +5,7 @@ import mockedTokenResponse from './helpers/mockedTokenResponse';
 import renderWithRouterAndRedux from './helpers/renderWithRouterAndRedux'
 
 
-describe('login tests', () => {
+describe('login page tests', () => {
   beforeEach(() => {
     global.fetch = jest.fn().mockReturnValue({
       json: jest.fn().mockReturnValue(mockedTokenResponse), 
