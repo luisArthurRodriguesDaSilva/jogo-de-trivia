@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { userScore } from '../redux/actions';
+import { addPlayerScore } from '../redux/actions';
 
+const INITIAL_TIME = 30;
 class Ranking extends Component {
   handleClickGoHome = () => {
     const { history, dispatch } = this.props;
 
-    dispatch(userScore(0));
+    dispatch(addPlayerScore(INITIAL_TIME, 0, 0));
     history.push('/');
   };
 

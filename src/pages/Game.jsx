@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
-import { fetchQuestion, userScore, addPlayerScore } from '../redux/actions';
+import { fetchQuestion, addPlayerScore } from '../redux/actions';
 import { delToken } from '../services/saveToken';
 import Header from '../components/Header';
 import Timer from '../components/Timer';
@@ -85,8 +85,8 @@ class Game extends Component {
           score: prevState.score + 1,
         }), async () => {
           const { time } = this.state;
-          await dispatch(userScore(score));
-          await dispatch(addPlayerScore(time, difficulty));
+          // await dispatch(userScore(score));
+          await dispatch(addPlayerScore(time, difficulty, score));
         });
       }
     });
