@@ -5,7 +5,6 @@ export const FAILED_REQUEST = 'FAILED_REQUEST';
 export const REQUEST_QUESTION = 'REQUEST_QUESTION';
 export const CURRENT_QUESTION = 'CURRENT_QUESTION';
 export const FAILED_QUESTION = 'FAILED_QUESTION';
-export const USER_SCORE = 'USER_SCORE';
 export const ADD_PLAYER_SCORE = 'ADD_PLAYER_SCORE';
 
 export const newLogin = (payLoad) => ({
@@ -48,13 +47,9 @@ export const fetchQuestion = (token) => async (dispatch) => {
   }
 };
 
-export const userScore = (payLoad) => ({
-  type: USER_SCORE,
-  payLoad,
-});
-
-export const addPlayerScore = (time, dificulty) => ({
+export const addPlayerScore = (time, dificulty, assertions) => ({
   type: ADD_PLAYER_SCORE,
   time,
   dificulty,
+  assertions,
 });

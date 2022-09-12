@@ -4,6 +4,7 @@ const dez = 10;
 
 const INITIAL_STATE = {
   score: 0,
+  assertions: 0,
 };
 
 const converterDificultData = { hard: 3, medium: 2, easy: 1 };
@@ -15,7 +16,10 @@ const player = (state = INITIAL_STATE, action) => {
   const { time, dificulty } = action;
   switch (action.type) {
   case ADD_PLAYER_SCORE:
-    return { score: score + dez + (time * convertedDificult(dificulty)) };
+    return {
+      ...state,
+      score: score + dez + (time * convertedDificult(dificulty)),
+      assertions: action.assertions };
   default:
     return state;
   }
