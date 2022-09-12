@@ -2,16 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
-import { addPlayerScore } from '../redux/actions';
+import { returnToTheDefaultState } from '../redux/actions';
 
 const VALUE_FEEDBACK = 3;
-const INITIAL_TIME = 30;
 
 class FeedBack extends Component {
   handleClickGoHome = () => {
     const { history, dispatch } = this.props;
 
-    dispatch(addPlayerScore(INITIAL_TIME, 0, 0));
+    dispatch(returnToTheDefaultState());
     history.push('/');
   };
 

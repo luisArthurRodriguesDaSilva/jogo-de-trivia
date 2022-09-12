@@ -1,4 +1,4 @@
-import { ADD_PLAYER_SCORE } from '../actions';
+import { ADD_PLAYER_SCORE, RETURN_TO_THE_DEFAULT_STATE } from '../actions';
 
 const dez = 10;
 
@@ -23,6 +23,8 @@ const player = (state = INITIAL_STATE, action) => {
       ...state,
       score: newScore,
       assertions: action.assertions };
+  case RETURN_TO_THE_DEFAULT_STATE:
+    return INITIAL_STATE;
   default:
     return state;
   }
