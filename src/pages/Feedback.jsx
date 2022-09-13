@@ -2,17 +2,18 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
-import { addPlayerScore } from '../redux/actions';
+import { returnToTheDefaultState } from '../redux/actions';
+// import { addPlayerScore } from '../redux/actions';
 import { addToLocalStorage, getFromLocalStorage } from '../services/localStorage';
 
 const VALUE_FEEDBACK = 3;
-const INITIAL_TIME = 30;
 
 class FeedBack extends Component {
   handleClickGoHome = () => {
     const { history, dispatch, score } = this.props;
 
-    dispatch(addPlayerScore(INITIAL_TIME, 0, 0));
+    dispatch(returnToTheDefaultState());
+    // dispatch(addPlayerScore(INITIAL_TIME, 0, 0));
     const currPlayer = getFromLocalStorage('ranking')[0];
     const newRanking = getFromLocalStorage('ranking')
       .filter(({ name }) => name !== currPlayer.name);

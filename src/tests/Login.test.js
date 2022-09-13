@@ -5,7 +5,7 @@ import mockedTokenResponse from './helpers/mockedTokenResponse';
 import renderWithRouterAndRedux from './helpers/renderWithRouterAndRedux'
 
 
-describe('login tests', () => {
+describe('login page tests', () => {
   beforeEach(() => {
     global.fetch = jest.fn().mockReturnValue({
       json: jest.fn().mockReturnValue(mockedTokenResponse), 
@@ -48,6 +48,7 @@ describe('login tests', () => {
     userEvent.type(emailInput, validEmail);
     userEvent.type(nameInput, validName);
     userEvent.click(playBtn);
+
     expect(global.fetch).toBeCalledWith('https://opentdb.com/api_token.php?command=request');
     await waitFor(() => expect(global.fetch).toHaveBeenCalledTimes(1));
     await waitFor(() => expect(window.localStorage.getItem('token')).toBe(mockedTokenResponse.token))

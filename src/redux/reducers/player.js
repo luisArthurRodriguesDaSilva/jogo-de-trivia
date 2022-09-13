@@ -1,4 +1,4 @@
-import { RESET_SCORE, ADD_PLAYER_SCORE } from '../actions';
+import { ADD_PLAYER_SCORE, RETURN_TO_THE_DEFAULT_STATE, RESET_SCORE } from '../actions';
 
 const dez = 10;
 
@@ -14,12 +14,17 @@ const convertedDificult = (dif) => converterDificultData[dif];
 const player = (state = INITIAL_STATE, action) => {
   const { score } = state;
   const { time, dificulty } = action;
+  const newScore = score + dez + (time * convertedDificult(dificulty));
+  console.log(time);
+
   switch (action.type) {
   case ADD_PLAYER_SCORE:
     return {
       ...state,
-      score: score + dez + (time * convertedDificult(dificulty)),
+      score: newScore,
       assertions: action.assertions };
+  case RETURN_TO_THE_DEFAULT_STATE:
+    return INITIAL_STATE;
   case RESET_SCORE: return {
     ...state, score: action.newScore,
   };

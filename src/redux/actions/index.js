@@ -6,6 +6,7 @@ export const REQUEST_QUESTION = 'REQUEST_QUESTION';
 export const CURRENT_QUESTION = 'CURRENT_QUESTION';
 export const FAILED_QUESTION = 'FAILED_QUESTION';
 export const ADD_PLAYER_SCORE = 'ADD_PLAYER_SCORE';
+export const RETURN_TO_THE_DEFAULT_STATE = 'RESTART_TO_THE_DEFAULT_STATE';
 export const RESET_SCORE = 'RESET_SCORE';
 
 export const newLogin = (payLoad) => ({
@@ -55,4 +56,5 @@ export const addPlayerScore = (time, dificulty, assertions) => ({
   assertions,
 });
 
+export const returnToTheDefaultState = () => ({ type: RETURN_TO_THE_DEFAULT_STATE });
 export const resetScore = (newScore) => ({ type: RESET_SCORE, newScore });
