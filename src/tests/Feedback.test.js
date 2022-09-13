@@ -9,6 +9,16 @@ const [validEmail, validName] = ['joaozinhoDoMinecraft@gmail.com', 'adimin4002']
 const urlToTakeToken = "https://opentdb.com/api_token.php?command=request"
 const sleep = ms => new Promise(r => setTimeout(r, ms)); // by https://stackoverflow.com/questions/951021/what-is-the-javascript-version-of-sleep
 
+const doTheLogin = () =>{
+  const emailInput = screen.getByTestId('input-gravatar-email');
+  const nameInput = screen.getByTestId('input-player-name');
+  const playBtn = screen.getByTestId('btn-play');
+
+  userEvent.type(emailInput, validEmail);
+  userEvent.type(nameInput, validName);
+  userEvent.click(playBtn);
+};
+
 const repeatFuncNTimes = async (func,times) => {
  for(let i = 0; i < times; i++) {
   await func();
@@ -40,24 +50,8 @@ describe('feedbacks page tests part1', ()=>{
       json: jest.fn().mockReturnValue(mResponse),
     })});
 
-    renderWithRouterAndRedux(<App />, {
-      initialEntries: ['/game'],
-      initialState: {
-          user: {
-            name: validName,
-            email: validEmail,
-          },
-          token: {
-            isFetching: false,
-            tokenObj: {
-              response_code: 0,
-              response_message: 'Token Generated Successfully!',
-              token: '84e0fce4b4d2966a83c6b52cad893076c434fd29d754a1c4b7ec3894c1c6d313'
-            },
-            error: ''
-          },
-      }
-    });
+    renderWithRouterAndRedux(<App />);
+    doTheLogin();
   });
 
   it('verify if the feedback message is correct (lose case)', async () => {
@@ -77,41 +71,26 @@ describe('feedbacks page tests part1', ()=>{
     expect(screen.getByTestId('feedback-total-question').textContent).toBe('2');
   });
 
-  // it('verify if the ranking button works as expected', async () => {
-  //   await generateScoreGame(1);
-  //   const btnRanking = screen.getByTestId('btn-ranking');
-  //   userEvent.click(btnRanking);
-  //   expect(screen.getByTestId('ranking-title').textContent).toBe('Ranking');
-  // });
+  it('verify if the ranking button works as expected', async () => {
+    await generateScoreGame(1);
+    const btnRanking = screen.getByTestId('btn-ranking');
+    userEvent.click(btnRanking);
+    expect(screen.getByTestId('ranking-title').textContent).toBe('Ranking');
+    
+  });
 
 });
-/*
 describe('feedback pages test part2',()=>{
   beforeEach(()=>{
-    global.fetch = jest.fn().mockReturnValue({
-      json: jest.fn().mockReturnValue(questionsResponse), 
-    });
+    global.fetch = jest.fn((url) => {
+      const mResponse = (url === urlToTakeToken) ? mockedTokenResponse : questionsResponse;
+      return{json: jest.fn().mockReturnValue(mResponse),}
+  });
   });
 
   it('verify if the play again button work as expected', async ()=>{
-    const { store } = renderWithRouterAndRedux(<App />, {
-      initialEntries: ['/game'],
-      initialState: {
-          user: {
-            name: validName,
-            email: validEmail,
-          },
-          token: {
-            isFetching: false,
-            tokenObj: {
-              response_code: 0,
-              response_message: 'Token Generated Successfully!',
-              token: '84e0fce4b4d2966a83c6b52cad893076c434fd29d754a1c4b7ec3894c1c6d313'
-            },
-            error: ''
-          },
-      }
-    });
+    const { store } = renderWithRouterAndRedux(<App />);
+    doTheLogin();
     
     await generateScoreGame(1); // in the end it will be change
     userEvent.click(screen.getByTestId('btn-play-again'));
@@ -128,4 +107,4 @@ describe('feedback pages test part2',()=>{
 
     // aprender a trocar o mock de acordo com a chamada pra fzr a proxima parte
   });
-}); */
+});
