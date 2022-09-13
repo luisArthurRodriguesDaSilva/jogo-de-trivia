@@ -3,14 +3,22 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import { returnToTheDefaultState } from '../redux/actions';
+// import { addPlayerScore } from '../redux/actions';
+import { addToLocalStorage, getFromLocalStorage } from '../services/localStorage';
 
 const VALUE_FEEDBACK = 3;
 
 class FeedBack extends Component {
   handleClickGoHome = () => {
-    const { history, dispatch } = this.props;
+    const { history, dispatch, score } = this.props;
 
     dispatch(returnToTheDefaultState());
+    // dispatch(addPlayerScore(INITIAL_TIME, 0, 0));
+    const currPlayer = getFromLocalStorage('ranking')[0];
+    const newRanking = getFromLocalStorage('ranking')
+      .filter(({ name }) => name !== currPlayer.name);
+    currPlayer.score = score;
+    addToLocalStorage('ranking', [currPlayer, ...newRanking]);
     history.push('/');
   };
 
@@ -30,7 +38,14 @@ class FeedBack extends Component {
         <button
           type="button"
           data-testid="btn-ranking"
-          onClick={ () => history.push('/ranking') }
+          onClick={ () => {
+            history.push('/ranking');
+            const currPlayer = getFromLocalStorage('ranking')[0];
+            const newRanking = getFromLocalStorage('ranking')
+              .filter(({ name }) => name !== currPlayer.name);
+            currPlayer.score = score;
+            addToLocalStorage('ranking', [currPlayer, ...newRanking]);
+          } }
         >
           Ranking
         </button>
