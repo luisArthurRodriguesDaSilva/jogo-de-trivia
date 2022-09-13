@@ -1,4 +1,4 @@
-import { ADD_PLAYER_SCORE } from '../actions';
+import { RESET_SCORE, ADD_PLAYER_SCORE } from '../actions';
 
 const dez = 10;
 
@@ -20,6 +20,9 @@ const player = (state = INITIAL_STATE, action) => {
       ...state,
       score: score + dez + (time * convertedDificult(dificulty)),
       assertions: action.assertions };
+  case RESET_SCORE: return {
+    ...state, score: action.newScore,
+  };
   default:
     return state;
   }

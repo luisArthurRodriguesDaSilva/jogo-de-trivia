@@ -2,9 +2,15 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addPlayerScore } from '../redux/actions';
+import PlayerCard from '../components/PlayerCard';
+import { getFromLocalStorage } from '../services/localStorage';
 
 const INITIAL_TIME = 30;
 class Ranking extends Component {
+  state = {
+    ranking: getFromLocalStorage('ranking'),
+  };
+
   handleClickGoHome = () => {
     const { history, dispatch } = this.props;
 
@@ -13,6 +19,7 @@ class Ranking extends Component {
   };
 
   render() {
+    const { ranking } = this.state;
     return (
       <section>
         <h1 data-testid="ranking-title">Ranking</h1>
@@ -23,6 +30,10 @@ class Ranking extends Component {
         >
           Tela Inicial
         </button>
+        {ranking.length > 0 && ranking
+          .sort((a, b) => b.score - a.score).map((player, i) => (
+            <PlayerCard key={ i } player={ player } index={ i } />
+          ))}
       </section>
     );
   }
