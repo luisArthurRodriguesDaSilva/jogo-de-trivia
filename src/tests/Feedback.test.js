@@ -5,7 +5,7 @@ import mockedTokenResponse from './helpers/mockedTokenResponse';
 import {questionsResponse} from './helpers/mockedQuestionResponse'
 import renderWithRouterAndRedux from './helpers/renderWithRouterAndRedux'
 
-const [validEmail, validName] = ['joaozinhoDoMinecraft@gmail.com', 'adimin4002'];
+const [validEmail, Name] = ['joaozinhoDoMinecraft@gmail.com', 'adimin4002'];
 const urlToTakeToken = "https://opentdb.com/api_token.php?command=request"
 const sleep = ms => new Promise(r => setTimeout(r, ms)); // by https://stackoverflow.com/questions/951021/what-is-the-javascript-version-of-sleep
 
@@ -15,7 +15,7 @@ const doTheLogin = () =>{
   const playBtn = screen.getByTestId('btn-play');
 
   userEvent.type(emailInput, validEmail);
-  userEvent.type(nameInput, validName);
+  userEvent.type(nameInput, Name);
   userEvent.click(playBtn);
 };
 
@@ -66,7 +66,7 @@ describe('feedbacks page tests part1', ()=>{
 
   it('verify if the user feedback data is in the document', async () => {
     await generateScoreGame(2);
-    expect(screen.getByTestId('header-player-name').textContent).toBe(validName);
+    expect(screen.getByTestId('header-player-name').textContent).toBe(Name);
     expect(screen.getByTestId('feedback-total-score').textContent).toBe('140');
     expect(screen.getByTestId('feedback-total-question').textContent).toBe('2');
   });
