@@ -6,6 +6,7 @@ import { fetchQuestion, addPlayerScore } from '../redux/actions';
 import { delToken } from '../services/saveToken';
 import Header from '../components/Header';
 import Timer from '../components/Timer';
+import './style/Game.css';
 
 class Game extends Component {
   constructor() {
@@ -22,6 +23,8 @@ class Game extends Component {
       isAnswer: false,
       score: 1,
       time: 30,
+      wrongClass: 'initial',
+      correctClass: 'initial',
     };
   }
 
@@ -74,7 +77,8 @@ class Game extends Component {
   };
 
   handleClickAnswer = ({ target: { name } }, difficulty = 'nothing here') => {
-    this.setState({ isAnswer: true }, () => {
+    this.setState({
+      isAnswer: true, wrongClass: 'incorrect', correctClass: 'correct' }, () => {
       const { dispatch } = this.props;
       const { randomAnswer, score } = this.state;
       const filterRadomAnswer = randomAnswer
@@ -100,7 +104,10 @@ class Game extends Component {
     const MAX_QUESTIONS = 4;
 
     if (indexQuestion < MAX_QUESTIONS) {
-      this.setState({ indexQuestion: indexQuestion + 1, isAnswer: false }, () => {
+      this.setState({ indexQuestion: indexQuestion + 1,
+        isAnswer: false,
+        wrongClass: 'initial',
+        correctClass: 'initial' }, () => {
         this.shuffleAnswer(indexQuestion + 1, results);
       });
     } else {
@@ -109,7 +116,8 @@ class Game extends Component {
   };
 
   render() {
-    const { randomAnswer, indexQuestion, isAnswer } = this.state;
+    const { randomAnswer, indexQuestion, isAnswer,
+      wrongClass, correctClass } = this.state;
     const { results, responseCode } = this.props;
     const START_INDEX = -1;
     const ERROR_API_CODE = 3;
@@ -152,6 +160,7 @@ class Game extends Component {
                                 this.handleClickAnswer(e, difficulty);
                               } }
                               disabled={ isAnswer }
+                              className={ correctClass }
                             >
                               {item.answer}
                             </button>
@@ -164,6 +173,7 @@ class Game extends Component {
                               name={ item.answer }
                               onClick={ this.handleClickAnswer }
                               disabled={ isAnswer }
+                              className={ wrongClass }
                             >
                               {item.answer}
                             </button>
