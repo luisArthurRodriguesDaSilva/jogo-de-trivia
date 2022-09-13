@@ -21,7 +21,7 @@ const loseQuestion = async () => {
 };
 
 const gainQuestion = async () => {
-  await sleep(1100);
+  await sleep(100);
   userEvent.click(screen.getByTestId('correct-answer'));
   userEvent.click(screen.getByTestId('btn-next'));
 };
@@ -64,15 +64,15 @@ describe('feedbacks page tests part1', ()=>{
   });
 
   it('verify if the feedback message is correct (winer case)', async () => {
-    await generateScoreGame(4);
+    await generateScoreGame(3);
     expect(screen.getByTestId('feedback-text').textContent).toEqual('Well Done!')
   });
 
   it('verify if the user feedback data is in the document', async () => {
-    await generateScoreGame(3);
+    await generateScoreGame(2);
     expect(screen.getByTestId('header-player-name').textContent).toBe(validName);
-    expect(screen.getByTestId('feedback-total-score').textContent).toBe('204');
-    expect(screen.getByTestId('feedback-total-question').textContent).toBe('3');
+    expect(screen.getByTestId('feedback-total-score').textContent).toBe('140');
+    expect(screen.getByTestId('feedback-total-question').textContent).toBe('2');
   });
 
   it('verify if the ranking button works as expected', async () => {
@@ -111,7 +111,7 @@ describe('feedback pages test part2',()=>{
       }
     });
     
-    await generateScoreGame(2); // in the end it will be change
+    await generateScoreGame(1); // in the end it will be change
     userEvent.click(screen.getByTestId('btn-play-again'));
 
     const emailInput = screen.getByTestId('input-gravatar-email');
