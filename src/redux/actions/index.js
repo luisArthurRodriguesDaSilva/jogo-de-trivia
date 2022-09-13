@@ -6,6 +6,7 @@ export const REQUEST_QUESTION = 'REQUEST_QUESTION';
 export const CURRENT_QUESTION = 'CURRENT_QUESTION';
 export const FAILED_QUESTION = 'FAILED_QUESTION';
 export const ADD_PLAYER_SCORE = 'ADD_PLAYER_SCORE';
+export const RESET_SCORE = 'RESET_SCORE';
 
 export const newLogin = (payLoad) => ({
   type: NEW_LOGIN,
@@ -53,3 +54,5 @@ export const addPlayerScore = (time, dificulty, assertions) => ({
   dificulty,
   assertions,
 });
+
+export const resetScore = (newScore) => ({ type: RESET_SCORE, newScore });
