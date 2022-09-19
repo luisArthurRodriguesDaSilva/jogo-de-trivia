@@ -22,8 +22,19 @@ class FeedBack extends Component {
     history.push('/');
   };
 
+  handleClickGoRanking = () => {
+    const { history, score } = this.props;
+
+    history.push('/ranking');
+    const currPlayer = getFromLocalStorage('ranking')[0];
+    const newRanking = getFromLocalStorage('ranking')
+      .filter(({ name }) => name !== currPlayer.name);
+    currPlayer.score = score;
+    addToLocalStorage('ranking', [currPlayer, ...newRanking]);
+  };
+
   render() {
-    const { history, score, assertions } = this.props;
+    const { score, assertions } = this.props;
 
     return (
       <div>
@@ -38,14 +49,7 @@ class FeedBack extends Component {
         <button
           type="button"
           data-testid="btn-ranking"
-          onClick={ () => {
-            history.push('/ranking');
-            const currPlayer = getFromLocalStorage('ranking')[0];
-            const newRanking = getFromLocalStorage('ranking')
-              .filter(({ name }) => name !== currPlayer.name);
-            currPlayer.score = score;
-            addToLocalStorage('ranking', [currPlayer, ...newRanking]);
-          } }
+          onClick={ this.handleClickGoRanking }
         >
           Ranking
         </button>

@@ -24,9 +24,21 @@ class Login extends Component {
   }
 
   validateBtnPlay = () => {
+    const emailInput = document.getElementById('emailIcon');
+    const nameInput = document.getElementById('nameIcon');
+    const fullClass = 'fas fa-check';
+    const failClass = 'fa-regular fa-circle-xmark';
     const { name, email } = this.state;
     const nameRegex = /^[A-Za-z0-9^ ]{3}/;
     const emailRegex = /^[^@^ ]+@[^@^ ]+\.[a-z]{2,3}(\.[a-z]{2})?$/;
+
+    if (emailRegex.test(email)) {
+      emailInput.className = fullClass;
+    } else { emailInput.className = failClass; }
+
+    if (nameRegex.test(name)) {
+      nameInput.className = fullClass;
+    } else { nameInput.className = failClass; }
 
     this.setState({
       isDisabled: !emailRegex.test(email) || !nameRegex.test(name),
@@ -73,45 +85,74 @@ class Login extends Component {
     const { name, email, isDisabled } = this.state;
 
     return (
-      <div>
-
-        <form onSubmit={ this.handleClick }>
-          <input
-            type="text"
-            name="name"
-            id="name"
-            value={ name }
-            placeholder="nome"
-            data-testid="input-player-name"
-            onChange={ this.handleChange }
-          />
-          <input
-            type="email"
-            name="email"
-            id="email"
-            value={ email }
-            placeholder="email"
-            data-testid="input-gravatar-email"
-            onChange={ this.handleChange }
-          />
-          <input
+      <form onSubmit={ this.handleClick } className="loginForm">
+        <div className="field">
+          <p className="control has-icons-left has-icons-right">
+            <input
+              type="text"
+              name="name"
+              id="name"
+              value={ name }
+              placeholder="nome"
+              data-testid="input-player-name"
+              className="input is-primary is-small is-rounded"
+              onChange={ this.handleChange }
+            />
+            <span className="icon is-small is-left">
+              <i className="fa-solid fa-user" />
+            </span>
+            <span className="icon is-small is-right">
+              <i id="nameIcon" className="fa-regular fa-circle-xmark" />
+            </span>
+          </p>
+        </div>
+        <div className="field">
+          <p className="control has-icons-left has-icons-right">
+            <input
+              type="email"
+              name="email"
+              id="email"
+              value={ email }
+              placeholder="email"
+              data-testid="input-gravatar-email"
+              className="input is-primary is-small is-rounded"
+              onChange={ this.handleChange }
+            />
+            <span className="icon is-small is-left">
+              <i className="fa-solid fa-envelope" />
+            </span>
+            <span className="icon is-small is-right">
+              <i id="emailIcon" className="fa-regular fa-circle-xmark" />
+            </span>
+          </p>
+        </div>
+        <p className="buttons">
+          <button
             type="submit"
-            value="Play"
             disabled={ isDisabled }
+            className="button is-link
+             is-responsive is-outlined has-tooltip-arrow has-tooltip-bottom"
+            data-tooltip="Incia o jogo"
             data-testid="btn-play"
-          />
-        </form>
+          >
+            Play
+          </button>
+        </p>
 
-        <div>
+        <div className="settings">
           <button
             type="button"
             data-testid="btn-settings"
+            className="button is-ghost has-tooltip-arrow has-tooltip-right"
+            data-tooltip="Configurações do jogo"
             onClick={ this.handleClickSettings }
           >
-            Settings
+            <span className="icon is-small">
+              <i className="fa-solid fa-gear" />
+            </span>
           </button>
         </div>
-      </div>
+      </form>
     );
   }
 }

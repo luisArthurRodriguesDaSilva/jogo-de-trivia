@@ -15,7 +15,6 @@ const player = (state = INITIAL_STATE, action) => {
   const { score } = state;
   const { time, dificulty } = action;
   const newScore = score + dez + (time * convertedDificult(dificulty));
-  console.log(time);
 
   switch (action.type) {
   case ADD_PLAYER_SCORE:

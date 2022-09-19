@@ -130,7 +130,7 @@ class Game extends Component {
           handleClickAnswer={ this.handleClickAnswer }
           setTime={ this.setTime }
         />}
-        {(indexQuestion === 0) && (<p>new game</p>)}
+        {/* {(indexQuestion === 0) && (<p>new game</p>)} */}
         {
           (responseCode === ERROR_API_CODE) && (delToken())
         }
