@@ -17,17 +17,20 @@ class FeedBack extends Component {
     const imgURL = `https://www.gravatar.com/avatar/${md5(email).toString()}`;
     const currPlayer = { name, score, picture: imgURL };
 
-    const newRanking = storage
-      .filter((item) => item.name !== currPlayer.name);
-    let actualRanking = storage
-      .find((item, index) => item.name === currPlayer.name && index !== 0);
+    if (storage) {
+      const newRanking = storage
+        .filter((item) => item.name !== currPlayer.name);
+      let actualRanking = storage
+        .find((item, index) => item.name === currPlayer.name && index !== 0);
 
-    if (!actualRanking) { actualRanking = { score: -1 }; }
-    if (actualRanking.score < score) {
-      currPlayer.score = score;
-      addToLocalStorage('ranking', [currPlayer, ...newRanking]);
+      if (!actualRanking) { actualRanking = { score: -1 }; }
+      if (actualRanking.score < score) {
+        addToLocalStorage('ranking', [currPlayer, ...newRanking]);
+      } else {
+        addToLocalStorage('ranking', [actualRanking, ...newRanking]);
+      }
     } else {
-      addToLocalStorage('ranking', [actualRanking, ...newRanking]);
+      addToLocalStorage('ranking', [currPlayer]);
     }
   }
 
