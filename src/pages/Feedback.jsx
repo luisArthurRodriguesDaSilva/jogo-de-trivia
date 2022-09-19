@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import md5 from 'crypto-js/md5';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import { returnToTheDefaultState } from '../redux/actions';
@@ -10,14 +11,16 @@ const VALUE_FEEDBACK = 3;
 
 class FeedBack extends Component {
   componentDidMount() {
-    const { score } = this.props;
+    const { score, name, email } = this.props;
     const storage = getFromLocalStorage('ranking');
 
-    const currPlayer = storage[0];
+    const imgURL = `https://www.gravatar.com/avatar/${md5(email).toString()}`;
+    const currPlayer = { name, score, picture: imgURL };
+
     const newRanking = storage
-      .filter(({ name }) => name !== currPlayer.name);
+      .filter((item) => item.name !== currPlayer.name);
     let actualRanking = storage
-      .find(({ name }, index) => name === currPlayer.name && index !== 0);
+      .find((item, index) => item.name === currPlayer.name && index !== 0);
 
     if (!actualRanking) { actualRanking = { score: -1 }; }
     if (actualRanking.score < score) {
@@ -76,6 +79,7 @@ class FeedBack extends Component {
 
 const mapStateToProps = (state) => ({
   ...state.player,
+  ...state.user,
 });
 
 FeedBack.propTypes = {
@@ -85,6 +89,8 @@ FeedBack.propTypes = {
   assertions: PropTypes.number.isRequired,
   score: PropTypes.number.isRequired,
   dispatch: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps)(FeedBack);
