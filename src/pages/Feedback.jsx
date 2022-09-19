@@ -9,28 +9,37 @@ import { addToLocalStorage, getFromLocalStorage } from '../services/localStorage
 const VALUE_FEEDBACK = 3;
 
 class FeedBack extends Component {
+  componentDidMount() {
+    const { score } = this.props;
+    const storage = getFromLocalStorage('ranking');
+
+    const currPlayer = storage[0];
+    const newRanking = storage
+      .filter(({ name }) => name !== currPlayer.name);
+    let actualRanking = storage
+      .find(({ name }, index) => name === currPlayer.name && index !== 0);
+
+    if (!actualRanking) { actualRanking = { score: -1 }; }
+    if (actualRanking.score < score) {
+      currPlayer.score = score;
+      addToLocalStorage('ranking', [currPlayer, ...newRanking]);
+    } else {
+      addToLocalStorage('ranking', [actualRanking, ...newRanking]);
+    }
+  }
+
   handleClickGoHome = () => {
-    const { history, dispatch, score } = this.props;
+    const { history, dispatch } = this.props;
 
     dispatch(returnToTheDefaultState());
     // dispatch(addPlayerScore(INITIAL_TIME, 0, 0));
-    const currPlayer = getFromLocalStorage('ranking')[0];
-    const newRanking = getFromLocalStorage('ranking')
-      .filter(({ name }) => name !== currPlayer.name);
-    currPlayer.score = score;
-    addToLocalStorage('ranking', [currPlayer, ...newRanking]);
     history.push('/');
   };
 
   handleClickGoRanking = () => {
-    const { history, score } = this.props;
+    const { history } = this.props;
 
     history.push('/ranking');
-    const currPlayer = getFromLocalStorage('ranking')[0];
-    const newRanking = getFromLocalStorage('ranking')
-      .filter(({ name }) => name !== currPlayer.name);
-    currPlayer.score = score;
-    addToLocalStorage('ranking', [currPlayer, ...newRanking]);
   };
 
   render() {
