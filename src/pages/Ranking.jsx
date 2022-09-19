@@ -32,7 +32,7 @@ class Ranking extends Component {
         </button>
         {ranking.length > 0 && ranking
           .sort((a, b) => b.score - a.score).map((player, i) => (
-            <PlayerCard key={ i } player={ player } index={ i } />
+            <PlayerCard key={ i } player={ player } />
           ))}
       </section>
     );
