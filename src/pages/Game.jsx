@@ -115,6 +115,12 @@ class Game extends Component {
     }
   };
 
+  decodeEntity(inputStr) {
+    const textarea = document.createElement('textarea');
+    textarea.innerHTML = inputStr;
+    return textarea.value;
+  }
+
   render() {
     const { randomAnswer, indexQuestion, isAnswer,
       wrongClass, correctClass } = this.state;
@@ -138,8 +144,16 @@ class Game extends Component {
           (responseCode === ERROR_API_CODE) ? (<Redirect to="/" />)
             : (
               <section>
-                <h2 data-testid="question-category">{results[indexQuestion].category}</h2>
-                <p data-testid="question-text">{results[indexQuestion].question}</p>
+                <h2 data-testid="question-category">
+                  {
+                    this.decodeEntity(results[indexQuestion].category)
+                  }
+                </h2>
+                <p data-testid="question-text">
+                  {
+                    this.decodeEntity(results[indexQuestion].question)
+                  }
+                </p>
                 <div data-testid="answer-options">
                   {
                     randomAnswer.map((item, index) => {

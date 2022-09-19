@@ -8,14 +8,21 @@ class Header extends React.Component {
     const { name, email, score } = this.props;
 
     return (
-      <header>
-        <img
-          src={ `https://www.gravatar.com/avatar/${md5(email).toString()}` }
-          alt="avatar"
-          data-testid="header-profile-picture"
-        />
+      <header className="cabecalho">
+        <figure className="image is-128x128">
+          <img
+            src={ `https://www.gravatar.com/avatar/${md5(email).toString()}` }
+            alt="avatar"
+            className="is-rounded"
+            data-testid="header-profile-picture"
+          />
+        </figure>
         <p data-testid="header-player-name">{name}</p>
-        <p data-testid="header-score">{score}</p>
+        <p data-testid="header-score">
+          Placar:
+          {' '}
+          {score}
+        </p>
 
       </header>
     );
