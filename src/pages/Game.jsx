@@ -176,7 +176,7 @@ class Game extends Component {
                               disabled={ isAnswer }
                               className={ correctClass }
                             >
-                              {item.answer}
+                              {this.decodeEntity(item.answer)}
                             </button>
                           )
                           : (
@@ -189,7 +189,7 @@ class Game extends Component {
                               disabled={ isAnswer }
                               className={ wrongClass }
                             >
-                              {item.answer}
+                              {this.decodeEntity(item.answer)}
                             </button>
                           )
                       );
