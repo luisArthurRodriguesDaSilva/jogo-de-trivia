@@ -149,7 +149,7 @@ class Game extends Component {
           (responseCode === ERROR_API_CODE) ? (<Redirect to="/" />)
             : (
               <section>
-                <Carrousel />
+                {/* <Carrousel /> */}
                 <h2 data-testid="question-category">
                   {
                     this.decodeEntity(results[indexQuestion].category)

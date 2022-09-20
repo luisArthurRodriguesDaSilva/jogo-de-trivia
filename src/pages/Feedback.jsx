@@ -21,7 +21,7 @@ class FeedBack extends Component {
       const newRanking = storage
         .filter((item) => item.name !== currPlayer.name);
       let actualRanking = storage
-        .find((item, index) => item.name === currPlayer.name && index !== 0);
+        .find((item) => item.name === currPlayer.name);
 
       if (!actualRanking) { actualRanking = { score: -1 }; }
       if (actualRanking.score < score) {

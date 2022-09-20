@@ -7,16 +7,6 @@ export default class Carrousel extends Component {
   }
 
   componentDidUpdate() {
-    bulmaCarousel.attach('#slider', {
-      slidesToScroll: 1,
-      slidesToShow: 1,
-      infinite: true,
-      autoplay: true,
-      // autoplaySpeed: 2000,
-      navigationKeys: true,
-      pagination: true,
-    });
-
     bulmaCarousel.attach('#carousel-demo', {
       slidesToScroll: 1,
       slidesToShow: 1,
@@ -48,13 +38,13 @@ export default class Carrousel extends Component {
               </figure>
               t3
             </div>
-            <div className="item-3">
+            <div className="item-4">
               <figure className="image is-16by9 is-covered">
                 <img src="https://source.unsplash.com/random/1200x500" alt="" />
               </figure>
               t4
             </div>
-            <div className="item-3">
+            <div className="item-5">
               <figure className="image is-16by9 is-covered">
                 <img src="https://source.unsplash.com/random/1200x500" alt="" />
               </figure>
