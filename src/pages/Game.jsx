@@ -7,7 +7,7 @@ import { delToken } from '../services/saveToken';
 import Header from '../components/Header';
 import Timer from '../components/Timer';
 import './style/Game.css';
-import Carrousel from '../components/Carrousel';
+// import Carrousel from '../components/Carrousel';
 
 const NORMAL_BTN = 'button is-success is-outlined is-responsive';
 const CORRECT_BTN = 'button is-success is-responsive';
