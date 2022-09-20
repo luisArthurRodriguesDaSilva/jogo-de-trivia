@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import md5 from 'crypto-js/md5';
 import PropTypes from 'prop-types';
 
 export default class PlayerCard extends Component {
   render() {
-    const { player: { name, picture, score, index }, email } = this.props;
+    const { player: { name, picture, score, index } } = this.props;
 
     return (
       <div className="cabecalho">

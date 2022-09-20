@@ -7,6 +7,11 @@ import { delToken } from '../services/saveToken';
 import Header from '../components/Header';
 import Timer from '../components/Timer';
 import './style/Game.css';
+import Carrousel from '../components/Carrousel';
+
+const NORMAL_BTN = 'button is-success is-outlined is-responsive';
+const CORRECT_BTN = 'button is-success is-responsive';
+const WRONG_BTN = 'button is-danger is-responsive';
 
 class Game extends Component {
   constructor() {
@@ -23,8 +28,8 @@ class Game extends Component {
       isAnswer: false,
       score: 1,
       time: 30,
-      wrongClass: 'initial',
-      correctClass: 'initial',
+      wrongClass: NORMAL_BTN,
+      correctClass: NORMAL_BTN,
     };
   }
 
@@ -78,7 +83,7 @@ class Game extends Component {
 
   handleClickAnswer = ({ target: { name } }, difficulty = 'nothing here') => {
     this.setState({
-      isAnswer: true, wrongClass: 'incorrect', correctClass: 'correct' }, () => {
+      isAnswer: true, wrongClass: WRONG_BTN, correctClass: CORRECT_BTN }, () => {
       const { dispatch } = this.props;
       const { randomAnswer, score } = this.state;
       const filterRadomAnswer = randomAnswer
@@ -106,8 +111,8 @@ class Game extends Component {
     if (indexQuestion < MAX_QUESTIONS) {
       this.setState({ indexQuestion: indexQuestion + 1,
         isAnswer: false,
-        wrongClass: 'initial',
-        correctClass: 'initial' }, () => {
+        wrongClass: NORMAL_BTN,
+        correctClass: NORMAL_BTN }, () => {
         this.shuffleAnswer(indexQuestion + 1, results);
       });
     } else {
@@ -144,6 +149,7 @@ class Game extends Component {
           (responseCode === ERROR_API_CODE) ? (<Redirect to="/" />)
             : (
               <section>
+                <Carrousel />
                 <h2 data-testid="question-category">
                   {
                     this.decodeEntity(results[indexQuestion].category)

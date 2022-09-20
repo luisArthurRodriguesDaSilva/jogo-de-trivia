@@ -95,3 +95,7 @@ body {
   flex-direction: column;
 }
 
+.button {
+  margin: 0 10px;
+}
+
