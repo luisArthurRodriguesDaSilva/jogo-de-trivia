@@ -152,50 +152,37 @@ class Game extends Component {
                 <div data-testid="answer-options">
                   {
                     randomAnswer.map((item, index) => {
+                      const { answer } = item;
                       if (results[indexQuestion].correct_answer !== item.answer) {
                         indexWrongAnswer += 1;
                       }
                       return (
                         (results[indexQuestion].correct_answer === item.answer)
                           ? (
-                            <button
+                            <BtnRespText
                               key={ index }
-                              type="button"
-                              data-testid="correct-answer"
-                              name={ item.answer }
-                              onClick={ (e) => {
-                                const { difficulty } = results[indexQuestion];
-                                this.handleClickAnswer(e, difficulty, index);
-                              } }
-                              disabled={ isAnswer }
-                              className={ correctClass }
-                            >
-                              <BtnRespText
-                                answer={ item.answer }
-                                indexResp={ indexResp }
-                                index={ index }
-                              />
-                            </button>
+                              id="correct-answer"
+                              answer={ answer }
+                              index={ index }
+                              results={ results[indexQuestion] }
+                              handleClickAnswer={ this.handleClickAnswer }
+                              isAnswer={ isAnswer }
+                              correctClass={ correctClass }
+                              indexResp={ indexResp }
+                            />
                           )
                           : (
-                            <button
+                            <BtnRespText
                               key={ index }
-                              type="button"
-                              data-testid={ `wrong-answer-${indexWrongAnswer}` }
-                              name={ item.answer }
-                              onClick={ (e) => {
-                                const { difficulty } = results[indexQuestion];
-                                this.handleClickAnswer(e, difficulty, index);
-                              } }
-                              disabled={ isAnswer }
-                              className={ wrongClass }
-                            >
-                              <BtnRespText
-                                answer={ item.answer }
-                                indexResp={ indexResp }
-                                index={ index }
-                              />
-                            </button>
+                              id={ `wrong-answer-${indexWrongAnswer}` }
+                              answer={ answer }
+                              index={ index }
+                              results={ results[indexQuestion] }
+                              handleClickAnswer={ this.handleClickAnswer }
+                              isAnswer={ isAnswer }
+                              correctClass={ wrongClass }
+                              indexResp={ indexResp }
+                            />
                           )
                       );
                     })
