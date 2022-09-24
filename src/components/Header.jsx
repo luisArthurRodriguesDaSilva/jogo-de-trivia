@@ -18,7 +18,7 @@ class Header extends React.Component {
             data-testid="header-profile-picture"
           />
         </figure>
-        <p data-testid="header-player-name">{name}</p>
+        <p data-testid="header-player-name" className="user">{name}</p>
         <p className="borderScore">
           Placar:
           {' '}

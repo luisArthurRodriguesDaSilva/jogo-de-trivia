@@ -31,8 +31,8 @@
 
 .btnNext {
   display: grid;
-  justify-items: right;
   height: 39px;
+  justify-items: right;
   margin-top: 10px;
   width: 100%;
 }
