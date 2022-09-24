@@ -147,12 +147,12 @@ class Game extends Component {
             : (
               <section>
                 {/* <Carrousel /> */}
-                <h2 data-testid="question-category">
+                <h2 data-testid="question-category" className="category">
                   {
                     this.decodeEntity(results[indexQuestion].category)
                   }
                 </h2>
-                <p data-testid="question-text">
+                <p data-testid="question-text" className="question">
                   {
                     this.decodeEntity(results[indexQuestion].question)
                   }

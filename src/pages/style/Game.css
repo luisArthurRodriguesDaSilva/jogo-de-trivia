@@ -1,3 +1,29 @@
+@font-face {
+  font-family: answer;
+  src: url('../../fonts/SunnyspellsRegular-MV9ze.otf');
+}
+
+@font-face {
+  font-family: category;
+  src: url('../../fonts/DigitaltsOrange-nRAPg.ttf');
+}
+
+@font-face {
+  font-family: question;
+  src: url('../../fonts/XTypewriter-z8oP4.ttf');
+}
+
+.category {
+  font-family: category , sans-serif;
+  font-size: 1.55rem;
+}
+
+.question {
+  font-family: question , sans-serif;
+  font-size: 1.55rem;
+  margin-bottom: 5px;
+}
+
 .correct {
   background-color: #48c78e;
   border: 3px solid rgb(6, 240, 15);
@@ -20,7 +46,8 @@
   border-radius: 4px;
   cursor: pointer;
   display: inline-flex;
-  font-size: 0.75rem;
+  font-family: answer , sans-serif;
+  font-size: 1.55rem;
   height: 2.5em;
   justify-content: center;
   margin: 0 10px;
