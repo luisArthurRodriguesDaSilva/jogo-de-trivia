@@ -1,0 +1,16 @@
+@font-face {
+  font-family: 'score';
+  src: url('../../fonts/3DIsometricBlack-BWPPG.ttf');
+}
+
+.borderScore {
+  border: 3px double white;
+  border-radius: 10%;
+  padding: 5px 10px;
+  margin: 10px;
+}
+
+.score {
+  font-family: 'score';
+  font-size: xx-large;
+}

@@ -55,44 +55,52 @@ body {
 }
 
 .loginForm {
+  align-items: center;
   display: flex;
   flex-direction: column;
-  margin-top: 15px;
   justify-items: center;
-  align-items: center;
+  margin-top: 15px;
 }
 
 .settings {
-  width: 100%;
   display: flex;
+  width: 100%;
 }
 
 .divider {
-  position: relative;
-  display: flex;
   align-items: center;
-  text-transform: uppercase;
   color: #7a7a7a;
+  display: flex;
   font-size: 0.75rem;
   font-weight: 600;
-  letter-spacing: .5px;
+  letter-spacing: 0.5px;
   margin: 5px 0 10px;
+  position: relative;
+  text-transform: uppercase;
 }
 
 /* line 28, src/sass/app.sass */
-.divider::after, .divider::before {
+.divider:after {
+  background-color: #dbdbdb;
   content: '_______';
   display: block;
   flex: 1;
   height: 1px;
+}
+
+.divider:before {
   background-color: #dbdbdb;
+  content: '_______';
+  display: block;
+  flex: 1;
+  height: 1px;
 }
 
 .cabecalho {
-  display: flex;
-  justify-items: center;
   align-items: center;
+  display: flex;
   flex-direction: column;
+  justify-items: center;
 }
 
 .button {

@@ -2,6 +2,7 @@ import React from 'react';
 import md5 from 'crypto-js/md5';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import './style/header.css';
 
 class Header extends React.Component {
   render() {
@@ -18,10 +19,10 @@ class Header extends React.Component {
           />
         </figure>
         <p data-testid="header-player-name">{name}</p>
-        <p>
+        <p className="borderScore">
           Placar:
           {' '}
-          <span data-testid="header-score">
+          <span data-testid="header-score" className="score">
             {score}
           </span>
         </p>

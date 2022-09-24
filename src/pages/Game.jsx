@@ -7,11 +7,10 @@ import { delToken } from '../services/saveToken';
 import Header from '../components/Header';
 import Timer from '../components/Timer';
 import './style/Game.css';
-// import Carrousel from '../components/Carrousel';
 
-const NORMAL_BTN = 'button is-success is-outlined is-responsive';
-const CORRECT_BTN = 'button is-success is-responsive';
-const WRONG_BTN = 'button is-danger is-responsive';
+const NORMAL_BTN = 'inicial';
+const CORRECT_BTN = 'correct';
+const WRONG_BTN = 'incorrect';
 
 class Game extends Component {
   constructor() {
@@ -94,7 +93,6 @@ class Game extends Component {
           score: prevState.score + 1,
         }), async () => {
           const { time } = this.state;
-          // await dispatch(userScore(score));
           await dispatch(addPlayerScore(time, difficulty, score));
         });
       }
@@ -141,7 +139,6 @@ class Game extends Component {
           handleClickAnswer={ this.handleClickAnswer }
           setTime={ this.setTime }
         />}
-        {/* {(indexQuestion === 0) && (<p>new game</p>)} */}
         {
           (responseCode === ERROR_API_CODE) && (delToken())
         }
@@ -202,15 +199,18 @@ class Game extends Component {
                     })
                   }
                 </div>
-                {(isAnswer) && (
-                  <button
-                    type="button"
-                    data-testid="btn-next"
-                    onClick={ this.handleClickNext }
-                  >
-                    Next
-                  </button>
-                )}
+                <div className="btnNext">
+                  {(isAnswer) && (
+                    <button
+                      type="button"
+                      data-testid="btn-next"
+                      className="button is-link"
+                      onClick={ this.handleClickNext }
+                    >
+                      Next
+                    </button>
+                  )}
+                </div>
               </section>
             )
         }
