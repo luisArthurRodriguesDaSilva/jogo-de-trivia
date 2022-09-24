@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { addPlayerScore } from '../redux/actions';
 import PlayerCard from '../components/PlayerCard';
 import { getFromLocalStorage } from '../services/localStorage';
+import './style/ranking.css';
 
 const INITIAL_TIME = 30;
 class Ranking extends Component {
@@ -26,9 +27,10 @@ class Ranking extends Component {
         <button
           type="button"
           data-testid="btn-go-home"
+          className="button is-link is-outlined"
           onClick={ this.handleClickGoHome }
         >
-          Tela Inicial
+          Play Again
         </button>
         {ranking.length > 0 && ranking
           .sort((a, b) => b.score - a.score).map((player, i) => (

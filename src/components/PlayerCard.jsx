@@ -6,7 +6,7 @@ export default class PlayerCard extends Component {
     const { player: { name, picture, score, index } } = this.props;
 
     return (
-      <div className="cabecalho">
+      <div className="cabecalho playercard">
         <figure className="image is-48x48">
           <img
             src={ picture }
