@@ -10,15 +10,8 @@ body {
 
 .App-logo {
   height: 15vmin;
+  margin-bottom: 10px;
   pointer-events: none;
-}
-
-.red-border {
-  border: 1px solid red;
-}
-
-.green-border {
-  border: 1px solid green;
 }
 
 @media ( prefers-reduced-motion : no-preference ) {
@@ -61,3 +54,57 @@ body {
     transform: translate3d(4px, 0, 0);
   }
 }
+
+.loginForm {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  margin-top: 15px;
+}
+
+.settings {
+  display: flex;
+  width: 100%;
+}
+
+.divider {
+  align-items: center;
+  color: #7a7a7a;
+  display: flex;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin: 5px 0 10px;
+  position: relative;
+  text-transform: uppercase;
+}
+
+/* line 28, src/sass/app.sass */
+.divider:after {
+  background-color: #dbdbdb;
+  content: '_______';
+  display: block;
+  flex: 1;
+  height: 1px;
+}
+
+.divider:before {
+  background-color: #dbdbdb;
+  content: '_______';
+  display: block;
+  flex: 1;
+  height: 1px;
+}
+
+.cabecalho {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+}
+
+.button {
+  margin: 0 10px;
+}
+

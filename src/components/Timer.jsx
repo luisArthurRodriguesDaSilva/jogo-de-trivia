@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import './style/timer.css';
 
 const ONE_SECOND = 1000;
+const CRITICAL_TIME = 10;
 
 class Timer extends React.Component {
   constructor() {
@@ -37,7 +39,14 @@ class Timer extends React.Component {
   render() {
     const { timerCount } = this.state;
     if (timerCount === 0) { this.timeIsEnd(); }
-    return (<h1 data-testid="timer">{timerCount}</h1>);
+    return (
+      <h1
+        data-testid="timer"
+        className={ timerCount > CRITICAL_TIME ? 'time' : 'time time_critical' }
+      >
+        {timerCount}
+      </h1>
+    );
   }
 }
 

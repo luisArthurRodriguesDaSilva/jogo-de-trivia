@@ -8,6 +8,10 @@ import Header from '../components/Header';
 import Timer from '../components/Timer';
 import './style/Game.css';
 
+const NORMAL_BTN = 'inicial';
+const CORRECT_BTN = 'correct';
+const WRONG_BTN = 'incorrect';
+
 class Game extends Component {
   constructor() {
     super();
@@ -23,8 +27,8 @@ class Game extends Component {
       isAnswer: false,
       score: 1,
       time: 30,
-      wrongClass: 'initial',
-      correctClass: 'initial',
+      wrongClass: NORMAL_BTN,
+      correctClass: NORMAL_BTN,
     };
   }
 
@@ -78,7 +82,7 @@ class Game extends Component {
 
   handleClickAnswer = ({ target: { name } }, difficulty = 'nothing here') => {
     this.setState({
-      isAnswer: true, wrongClass: 'incorrect', correctClass: 'correct' }, () => {
+      isAnswer: true, wrongClass: WRONG_BTN, correctClass: CORRECT_BTN }, () => {
       const { dispatch } = this.props;
       const { randomAnswer, score } = this.state;
       const filterRadomAnswer = randomAnswer
@@ -89,7 +93,6 @@ class Game extends Component {
           score: prevState.score + 1,
         }), async () => {
           const { time } = this.state;
-          // await dispatch(userScore(score));
           await dispatch(addPlayerScore(time, difficulty, score));
         });
       }
@@ -106,14 +109,20 @@ class Game extends Component {
     if (indexQuestion < MAX_QUESTIONS) {
       this.setState({ indexQuestion: indexQuestion + 1,
         isAnswer: false,
-        wrongClass: 'initial',
-        correctClass: 'initial' }, () => {
+        wrongClass: NORMAL_BTN,
+        correctClass: NORMAL_BTN }, () => {
         this.shuffleAnswer(indexQuestion + 1, results);
       });
     } else {
       history.push('/feedback');
     }
   };
+
+  decodeEntity(inputStr) {
+    const textarea = document.createElement('textarea');
+    textarea.innerHTML = inputStr;
+    return textarea.value;
+  }
 
   render() {
     const { randomAnswer, indexQuestion, isAnswer,
@@ -130,7 +139,6 @@ class Game extends Component {
           handleClickAnswer={ this.handleClickAnswer }
           setTime={ this.setTime }
         />}
-        {(indexQuestion === 0) && (<p>new game</p>)}
         {
           (responseCode === ERROR_API_CODE) && (delToken())
         }
@@ -138,8 +146,17 @@ class Game extends Component {
           (responseCode === ERROR_API_CODE) ? (<Redirect to="/" />)
             : (
               <section>
-                <h2 data-testid="question-category">{results[indexQuestion].category}</h2>
-                <p data-testid="question-text">{results[indexQuestion].question}</p>
+                {/* <Carrousel /> */}
+                <h2 data-testid="question-category" className="category">
+                  {
+                    this.decodeEntity(results[indexQuestion].category)
+                  }
+                </h2>
+                <p data-testid="question-text" className="question">
+                  {
+                    this.decodeEntity(results[indexQuestion].question)
+                  }
+                </p>
                 <div data-testid="answer-options">
                   {
                     randomAnswer.map((item, index) => {
@@ -162,7 +179,7 @@ class Game extends Component {
                               disabled={ isAnswer }
                               className={ correctClass }
                             >
-                              {item.answer}
+                              {this.decodeEntity(item.answer)}
                             </button>
                           )
                           : (
@@ -175,22 +192,25 @@ class Game extends Component {
                               disabled={ isAnswer }
                               className={ wrongClass }
                             >
-                              {item.answer}
+                              {this.decodeEntity(item.answer)}
                             </button>
                           )
                       );
                     })
                   }
                 </div>
-                {(isAnswer) && (
-                  <button
-                    type="button"
-                    data-testid="btn-next"
-                    onClick={ this.handleClickNext }
-                  >
-                    Next
-                  </button>
-                )}
+                <div className="btnNext">
+                  {(isAnswer) && (
+                    <button
+                      type="button"
+                      data-testid="btn-next"
+                      className="button is-link"
+                      onClick={ this.handleClickNext }
+                    >
+                      Next
+                    </button>
+                  )}
+                </div>
               </section>
             )
         }
