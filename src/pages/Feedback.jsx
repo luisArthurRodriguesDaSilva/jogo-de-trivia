@@ -6,6 +6,7 @@ import Header from '../components/Header';
 import { returnToTheDefaultState } from '../redux/actions';
 // import { addPlayerScore } from '../redux/actions';
 import { addToLocalStorage, getFromLocalStorage } from '../services/localStorage';
+import './style/feedback.css';
 
 const VALUE_FEEDBACK = 3;
 
@@ -49,21 +50,22 @@ class FeedBack extends Component {
   };
 
   render() {
-    const { score, assertions } = this.props;
+    const { assertions } = this.props;
 
     return (
       <div>
         <Header />
         {assertions >= VALUE_FEEDBACK
-          ? <p data-testid="feedback-text">Well Done!</p>
-          : <p data-testid="feedback-text">Could be better...</p>}
+          ? <p data-testid="feedback-text" className="done">Well Done!</p>
+          : <p data-testid="feedback-text" className="better">Could be better...</p>}
         {/* <h4>Total de perguntas certas:</h4> */}
-        <p data-testid="feedback-total-score">{score}</p>
+        {/* <p data-testid="feedback-total-score">{score}</p> */}
         {/* <h4>Total de pontos:</h4> */}
-        <p data-testid="feedback-total-question">{assertions}</p>
+        <p data-testid="feedback-total-question" className="assertions">{assertions}</p>
         <button
           type="button"
           data-testid="btn-ranking"
+          className="button is-success is-outlined"
           onClick={ this.handleClickGoRanking }
         >
           Ranking
@@ -71,6 +73,7 @@ class FeedBack extends Component {
         <button
           type="button"
           data-testid="btn-play-again"
+          className="button is-link is-outlined"
           onClick={ this.handleClickGoHome }
         >
           Play Again
