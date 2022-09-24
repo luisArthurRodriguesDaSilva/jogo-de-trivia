@@ -7,6 +7,7 @@ import { delToken } from '../services/saveToken';
 import Header from '../components/Header';
 import Timer from '../components/Timer';
 import './style/Game.css';
+import BtnRespText from '../components/BtnRespText';
 
 const NORMAL_BTN = 'inicial';
 const CORRECT_BTN = 'correct';
@@ -15,7 +16,6 @@ const WRONG_BTN = 'incorrect';
 class Game extends Component {
   constructor() {
     super();
-
     this.state = {
       indexQuestion: 0,
       randomAnswer: [
@@ -39,11 +39,9 @@ class Game extends Component {
 
   newGame = async () => {
     const { dispatch, token } = this.props;
-
     await dispatch(fetchQuestion(token));
     this.setState({ indexQuestion: 0 }, () => {
       const { results, responseCode } = this.props;
-
       if (responseCode === 0) {
         this.shuffleAnswer(0, results);
       }
@@ -52,13 +50,10 @@ class Game extends Component {
 
   buildOrderAnswer = (index, array) => {
     if (array.length === 0) return [];
-
     let orderAnswer = [{ answer: array[index].correct_answer, isCorrect: true }];
-
     array[index].incorrect_answers.forEach((item) => {
       orderAnswer = [...orderAnswer, { answer: item, isCorrect: false }];
     });
-
     return orderAnswer;
   };
 
@@ -67,16 +62,12 @@ class Game extends Component {
     const TEMP = 3;
     const randomIndexArray = [0, 1, 2, TEMP].sort(() => Math.random() - RANGE);
     const randomBoolIndexArray = [0, 1].sort(() => Math.random() - RANGE);
-
     const orderAnswer = this.buildOrderAnswer(index, array);
-
     if (array[index].type === 'multiple') {
       const disorderAnswer = randomIndexArray.map((i) => orderAnswer[i]);
-
       this.setState({ randomAnswer: disorderAnswer });
     } else if (array[index].type === 'boolean') {
       const disorderAnswer = randomBoolIndexArray.map((i) => orderAnswer[i]);
-
       this.setState({ randomAnswer: disorderAnswer });
     }
   };
@@ -91,7 +82,6 @@ class Game extends Component {
       const { randomAnswer, score } = this.state;
       const filterRadomAnswer = randomAnswer
         .filter(({ isCorrect }) => isCorrect === true);
-
       if (name === filterRadomAnswer[0].answer) {
         this.setState((prevState) => ({
           score: prevState.score + 1,
@@ -109,7 +99,6 @@ class Game extends Component {
     const { indexQuestion } = this.state;
     const { results, history } = this.props;
     const MAX_QUESTIONS = 4;
-
     if (indexQuestion < MAX_QUESTIONS) {
       this.setState({ indexQuestion: indexQuestion + 1,
         isAnswer: false,
@@ -136,7 +125,6 @@ class Game extends Component {
     const START_INDEX = -1;
     const ERROR_API_CODE = 3;
     let indexWrongAnswer = START_INDEX;
-
     return (
       <main>
         <Header />
@@ -151,7 +139,6 @@ class Game extends Component {
           (responseCode === ERROR_API_CODE) ? (<Redirect to="/" />)
             : (
               <section>
-                {/* <Carrousel /> */}
                 <h2 data-testid="question-category" className="category">
                   {
                     this.decodeEntity(results[indexQuestion].category)
@@ -168,7 +155,6 @@ class Game extends Component {
                       if (results[indexQuestion].correct_answer !== item.answer) {
                         indexWrongAnswer += 1;
                       }
-
                       return (
                         (results[indexQuestion].correct_answer === item.answer)
                           ? (
@@ -184,19 +170,11 @@ class Game extends Component {
                               disabled={ isAnswer }
                               className={ correctClass }
                             >
-                              { (indexResp === index)
-                                ? (
-                                  <div
-                                    className="has-tooltip-arrow has-tooltip-arrow
-                                     has-tooltip-active has-tooltip-bottom"
-                                    data-tooltip="Resposta dada!"
-                                  >
-                                    { this.decodeEntity(item.answer) }
-                                    )
-                                  </div>
-                                ) : (
-                                  this.decodeEntity(item.answer)
-                                )}
+                              <BtnRespText
+                                answer={ item.answer }
+                                indexResp={ indexResp }
+                                index={ index }
+                              />
                             </button>
                           )
                           : (
@@ -212,18 +190,11 @@ class Game extends Component {
                               disabled={ isAnswer }
                               className={ wrongClass }
                             >
-                              { (indexResp === index)
-                                ? (
-                                  <div
-                                    className="has-tooltip-arrow has-tooltip-arrow
-                                     has-tooltip-active has-tooltip-bottom"
-                                    data-tooltip="Resposta dada!"
-                                  >
-                                    { this.decodeEntity(item.answer) }
-                                  </div>
-                                ) : (
-                                  this.decodeEntity(item.answer)
-                                )}
+                              <BtnRespText
+                                answer={ item.answer }
+                                indexResp={ indexResp }
+                                index={ index }
+                              />
                             </button>
                           )
                       );
