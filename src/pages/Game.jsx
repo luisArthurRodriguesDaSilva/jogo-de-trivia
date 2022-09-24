@@ -29,6 +29,7 @@ class Game extends Component {
       time: 30,
       wrongClass: NORMAL_BTN,
       correctClass: NORMAL_BTN,
+      indexResp: -1,
     };
   }
 
@@ -80,9 +81,12 @@ class Game extends Component {
     }
   };
 
-  handleClickAnswer = ({ target: { name } }, difficulty = 'nothing here') => {
+  handleClickAnswer = ({ target: { name } }, difficulty = 'nothing here', i) => {
     this.setState({
-      isAnswer: true, wrongClass: WRONG_BTN, correctClass: CORRECT_BTN }, () => {
+      isAnswer: true,
+      wrongClass: WRONG_BTN,
+      correctClass: CORRECT_BTN,
+      indexResp: i }, () => {
       const { dispatch } = this.props;
       const { randomAnswer, score } = this.state;
       const filterRadomAnswer = randomAnswer
@@ -110,7 +114,8 @@ class Game extends Component {
       this.setState({ indexQuestion: indexQuestion + 1,
         isAnswer: false,
         wrongClass: NORMAL_BTN,
-        correctClass: NORMAL_BTN }, () => {
+        correctClass: NORMAL_BTN,
+        indexResp: -1 }, () => {
         this.shuffleAnswer(indexQuestion + 1, results);
       });
     } else {
@@ -126,7 +131,7 @@ class Game extends Component {
 
   render() {
     const { randomAnswer, indexQuestion, isAnswer,
-      wrongClass, correctClass } = this.state;
+      wrongClass, correctClass, indexResp } = this.state;
     const { results, responseCode } = this.props;
     const START_INDEX = -1;
     const ERROR_API_CODE = 3;
@@ -174,12 +179,24 @@ class Game extends Component {
                               name={ item.answer }
                               onClick={ (e) => {
                                 const { difficulty } = results[indexQuestion];
-                                this.handleClickAnswer(e, difficulty);
+                                this.handleClickAnswer(e, difficulty, index);
                               } }
                               disabled={ isAnswer }
                               className={ correctClass }
                             >
-                              {this.decodeEntity(item.answer)}
+                              { (indexResp === index)
+                                ? (
+                                  <div
+                                    className="has-tooltip-arrow has-tooltip-arrow
+                                     has-tooltip-active has-tooltip-bottom"
+                                    data-tooltip="Resposta dada!"
+                                  >
+                                    { this.decodeEntity(item.answer) }
+                                    )
+                                  </div>
+                                ) : (
+                                  this.decodeEntity(item.answer)
+                                )}
                             </button>
                           )
                           : (
@@ -188,11 +205,25 @@ class Game extends Component {
                               type="button"
                               data-testid={ `wrong-answer-${indexWrongAnswer}` }
                               name={ item.answer }
-                              onClick={ this.handleClickAnswer }
+                              onClick={ (e) => {
+                                const { difficulty } = results[indexQuestion];
+                                this.handleClickAnswer(e, difficulty, index);
+                              } }
                               disabled={ isAnswer }
                               className={ wrongClass }
                             >
-                              {this.decodeEntity(item.answer)}
+                              { (indexResp === index)
+                                ? (
+                                  <div
+                                    className="has-tooltip-arrow has-tooltip-arrow
+                                     has-tooltip-active has-tooltip-bottom"
+                                    data-tooltip="Resposta dada!"
+                                  >
+                                    { this.decodeEntity(item.answer) }
+                                  </div>
+                                ) : (
+                                  this.decodeEntity(item.answer)
+                                )}
                             </button>
                           )
                       );
