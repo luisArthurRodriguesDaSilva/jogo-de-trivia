@@ -10,6 +10,7 @@ body {
 
 .App-logo {
   height: 15vmin;
+  margin-bottom: 10px;
   pointer-events: none;
 }
 
