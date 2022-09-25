@@ -24,6 +24,7 @@
 }
 
 .user {
+  color: gainsboro;
   font-family: user , sans-serif;
   font-size: xx-large;
 }
