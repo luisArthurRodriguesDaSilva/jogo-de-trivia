@@ -13,7 +13,14 @@
   border-radius: 10%;
   box-shadow: 3px 3px #888;
   margin: 10px;
+}
+
+.subBorder {
+  animation: animate2 1.5s linear infinite;
+  border: 1px inset #888;
   padding: 5px 10px;
+  border-radius: 10%;
+  /* transform: translate(-50%, -50%); */
 }
 
 .user {
@@ -22,6 +29,35 @@
 }
 
 .score {
+  animation: animate 1.5s linear infinite;
+  color: yellow;
   font-family: score , sans-serif;
   font-size: xx-large;
+}
+
+@keyframes animate{
+  0%{
+    opacity: 0;
+  }
+  50%{
+    opacity: 0.7;
+  }
+  100%{
+    opacity: 0;
+  }
+}
+
+@keyframes animate2{
+  0%{
+    border-color: red;
+    background-color: rgba(0, 21, 255, 0.045);
+  }
+  50%{
+    border-color: #888;
+    background-color: rgba(0, 21, 255, 0.27);
+  }
+  100%{
+    border-color: red;
+    background-color: rgba(0, 21, 255, 0.045);
+  }
 }
