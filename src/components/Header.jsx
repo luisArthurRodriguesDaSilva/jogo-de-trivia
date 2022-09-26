@@ -20,11 +20,13 @@ class Header extends React.Component {
         </figure>
         <p data-testid="header-player-name" className="user">{name}</p>
         <p className="borderScore">
-          Placar:
-          {' '}
-          <span data-testid="header-score" className="score">
-            {score}
-          </span>
+          <div className="subBorder">
+            Placar:
+            {' '}
+            <span data-testid="header-score" className="score">
+              {score}
+            </span>
+          </div>
         </p>
 
       </header>

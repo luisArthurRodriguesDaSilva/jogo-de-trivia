@@ -7,6 +7,7 @@ import { delToken } from '../services/saveToken';
 import Header from '../components/Header';
 import Timer from '../components/Timer';
 import './style/Game.css';
+import BtnRespText from '../components/BtnRespText';
 
 const NORMAL_BTN = 'inicial';
 const CORRECT_BTN = 'correct';
@@ -15,7 +16,6 @@ const WRONG_BTN = 'incorrect';
 class Game extends Component {
   constructor() {
     super();
-
     this.state = {
       indexQuestion: 0,
       randomAnswer: [
@@ -29,6 +29,7 @@ class Game extends Component {
       time: 30,
       wrongClass: NORMAL_BTN,
       correctClass: NORMAL_BTN,
+      indexResp: -1,
     };
   }
 
@@ -38,11 +39,9 @@ class Game extends Component {
 
   newGame = async () => {
     const { dispatch, token } = this.props;
-
     await dispatch(fetchQuestion(token));
     this.setState({ indexQuestion: 0 }, () => {
       const { results, responseCode } = this.props;
-
       if (responseCode === 0) {
         this.shuffleAnswer(0, results);
       }
@@ -51,13 +50,10 @@ class Game extends Component {
 
   buildOrderAnswer = (index, array) => {
     if (array.length === 0) return [];
-
     let orderAnswer = [{ answer: array[index].correct_answer, isCorrect: true }];
-
     array[index].incorrect_answers.forEach((item) => {
       orderAnswer = [...orderAnswer, { answer: item, isCorrect: false }];
     });
-
     return orderAnswer;
   };
 
@@ -66,28 +62,26 @@ class Game extends Component {
     const TEMP = 3;
     const randomIndexArray = [0, 1, 2, TEMP].sort(() => Math.random() - RANGE);
     const randomBoolIndexArray = [0, 1].sort(() => Math.random() - RANGE);
-
     const orderAnswer = this.buildOrderAnswer(index, array);
-
     if (array[index].type === 'multiple') {
       const disorderAnswer = randomIndexArray.map((i) => orderAnswer[i]);
-
       this.setState({ randomAnswer: disorderAnswer });
     } else if (array[index].type === 'boolean') {
       const disorderAnswer = randomBoolIndexArray.map((i) => orderAnswer[i]);
-
       this.setState({ randomAnswer: disorderAnswer });
     }
   };
 
-  handleClickAnswer = ({ target: { name } }, difficulty = 'nothing here') => {
+  handleClickAnswer = ({ target: { name } }, difficulty = 'nothing here', i) => {
     this.setState({
-      isAnswer: true, wrongClass: WRONG_BTN, correctClass: CORRECT_BTN }, () => {
+      isAnswer: true,
+      wrongClass: WRONG_BTN,
+      correctClass: CORRECT_BTN,
+      indexResp: i }, () => {
       const { dispatch } = this.props;
       const { randomAnswer, score } = this.state;
       const filterRadomAnswer = randomAnswer
         .filter(({ isCorrect }) => isCorrect === true);
-
       if (name === filterRadomAnswer[0].answer) {
         this.setState((prevState) => ({
           score: prevState.score + 1,
@@ -105,12 +99,12 @@ class Game extends Component {
     const { indexQuestion } = this.state;
     const { results, history } = this.props;
     const MAX_QUESTIONS = 4;
-
     if (indexQuestion < MAX_QUESTIONS) {
       this.setState({ indexQuestion: indexQuestion + 1,
         isAnswer: false,
         wrongClass: NORMAL_BTN,
-        correctClass: NORMAL_BTN }, () => {
+        correctClass: NORMAL_BTN,
+        indexResp: -1 }, () => {
         this.shuffleAnswer(indexQuestion + 1, results);
       });
     } else {
@@ -126,12 +120,11 @@ class Game extends Component {
 
   render() {
     const { randomAnswer, indexQuestion, isAnswer,
-      wrongClass, correctClass } = this.state;
+      wrongClass, correctClass, indexResp } = this.state;
     const { results, responseCode } = this.props;
     const START_INDEX = -1;
     const ERROR_API_CODE = 3;
     let indexWrongAnswer = START_INDEX;
-
     return (
       <main>
         <Header />
@@ -146,7 +139,6 @@ class Game extends Component {
           (responseCode === ERROR_API_CODE) ? (<Redirect to="/" />)
             : (
               <section>
-                {/* <Carrousel /> */}
                 <h2 data-testid="question-category" className="category">
                   {
                     this.decodeEntity(results[indexQuestion].category)
@@ -160,40 +152,37 @@ class Game extends Component {
                 <div data-testid="answer-options">
                   {
                     randomAnswer.map((item, index) => {
+                      const { answer } = item;
                       if (results[indexQuestion].correct_answer !== item.answer) {
                         indexWrongAnswer += 1;
                       }
-
                       return (
                         (results[indexQuestion].correct_answer === item.answer)
                           ? (
-                            <button
+                            <BtnRespText
                               key={ index }
-                              type="button"
-                              data-testid="correct-answer"
-                              name={ item.answer }
-                              onClick={ (e) => {
-                                const { difficulty } = results[indexQuestion];
-                                this.handleClickAnswer(e, difficulty);
-                              } }
-                              disabled={ isAnswer }
-                              className={ correctClass }
-                            >
-                              {this.decodeEntity(item.answer)}
-                            </button>
+                              id="correct-answer"
+                              answer={ answer }
+                              index={ index }
+                              results={ results[indexQuestion] }
+                              handleClickAnswer={ this.handleClickAnswer }
+                              isAnswer={ isAnswer }
+                              correctClass={ correctClass }
+                              indexResp={ indexResp }
+                            />
                           )
                           : (
-                            <button
+                            <BtnRespText
                               key={ index }
-                              type="button"
-                              data-testid={ `wrong-answer-${indexWrongAnswer}` }
-                              name={ item.answer }
-                              onClick={ this.handleClickAnswer }
-                              disabled={ isAnswer }
-                              className={ wrongClass }
-                            >
-                              {this.decodeEntity(item.answer)}
-                            </button>
+                              id={ `wrong-answer-${indexWrongAnswer}` }
+                              answer={ answer }
+                              index={ index }
+                              results={ results[indexQuestion] }
+                              handleClickAnswer={ this.handleClickAnswer }
+                              isAnswer={ isAnswer }
+                              correctClass={ wrongClass }
+                              indexResp={ indexResp }
+                            />
                           )
                       );
                     })
