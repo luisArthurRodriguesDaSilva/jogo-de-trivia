@@ -55,13 +55,30 @@ class FeedBack extends Component {
     return (
       <div>
         <Header />
-        {assertions >= VALUE_FEEDBACK
-          ? <p data-testid="feedback-text" className="done">Well Done!</p>
-          : <p data-testid="feedback-text" className="better">Could be better...</p>}
+        {
+          assertions >= VALUE_FEEDBACK
+            ? <p data-testid="feedback-text" className="done">Muito bem</p>
+            : (
+              <p
+                data-testid="feedback-text"
+                className="better"
+              >
+                poderia ter sido melhor..
+
+              </p>
+            )
+        }
         {/* <h4>Total de perguntas certas:</h4> */}
         {/* <p data-testid="feedback-total-score">{score}</p> */}
         {/* <h4>Total de pontos:</h4> */}
-        <p data-testid="feedback-total-question" className="assertions">{assertions}</p>
+        <p data-testid="feedback-total-question" className="assertions">
+          Você conseguiu um total de
+          {' '}
+          {assertions}
+          {' '}
+          acerto
+          {assertions !== 1 && 's'}
+        </p>
         <button
           type="button"
           data-testid="btn-ranking"
