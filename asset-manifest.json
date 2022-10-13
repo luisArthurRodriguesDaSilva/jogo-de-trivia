@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/jogo-de-trivia/static/css/main.be4b5d48.css",
-    "main.js": "/jogo-de-trivia/static/js/main.c32d4813.js",
+    "main.js": "/jogo-de-trivia/static/js/main.e6ddd356.js",
     "static/media/DigitaltsOrange-nRAPg.ttf": "/jogo-de-trivia/static/media/DigitaltsOrange-nRAPg.89e3bd020d23e916d771.ttf",
     "static/media/DigitaltsLime-lgxmd.ttf": "/jogo-de-trivia/static/media/DigitaltsLime-lgxmd.4886758fced11ee5b9bb.ttf",
     "static/media/fa-solid-900.ttf": "/jogo-de-trivia/static/media/fa-solid-900.b48ad290d0335879a92b.ttf",
@@ -20,10 +20,10 @@
     "static/media/fa-v4compatibility.woff2": "/jogo-de-trivia/static/media/fa-v4compatibility.745989aab0d69cab7e70.woff2",
     "index.html": "/jogo-de-trivia/index.html",
     "main.be4b5d48.css.map": "/jogo-de-trivia/static/css/main.be4b5d48.css.map",
-    "main.c32d4813.js.map": "/jogo-de-trivia/static/js/main.c32d4813.js.map"
+    "main.e6ddd356.js.map": "/jogo-de-trivia/static/js/main.e6ddd356.js.map"
   },
   "entrypoints": [
     "static/css/main.be4b5d48.css",
-    "static/js/main.c32d4813.js"
+    "static/js/main.e6ddd356.js"
   ]
 }
