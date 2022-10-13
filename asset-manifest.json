@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/jogo-de-trivia/static/css/main.be4b5d48.css",
+    "main.js": "/jogo-de-trivia/static/js/main.c32d4813.js",
+    "static/media/DigitaltsOrange-nRAPg.ttf": "/jogo-de-trivia/static/media/DigitaltsOrange-nRAPg.89e3bd020d23e916d771.ttf",
+    "static/media/DigitaltsLime-lgxmd.ttf": "/jogo-de-trivia/static/media/DigitaltsLime-lgxmd.4886758fced11ee5b9bb.ttf",
+    "static/media/fa-solid-900.ttf": "/jogo-de-trivia/static/media/fa-solid-900.b48ad290d0335879a92b.ttf",
+    "static/media/fa-brands-400.ttf": "/jogo-de-trivia/static/media/fa-brands-400.f9ee61fab3c11e2f3ed3.ttf",
+    "static/media/fa-solid-900.woff2": "/jogo-de-trivia/static/media/fa-solid-900.66104b766c3d0462b3c5.woff2",
+    "static/media/XTypewriter-z8oP4.ttf": "/jogo-de-trivia/static/media/XTypewriter-z8oP4.e3e4af17045bcebf4771.ttf",
+    "static/media/fa-brands-400.woff2": "/jogo-de-trivia/static/media/fa-brands-400.e1a247a5ef41e1975742.woff2",
+    "static/media/3DIsometricBlack-BWPPG.ttf": "/jogo-de-trivia/static/media/3DIsometricBlack-BWPPG.110ee1a6a6437d1840d4.ttf",
+    "static/media/NovaDisplayRegular-x3w8O.otf": "/jogo-de-trivia/static/media/NovaDisplayRegular-x3w8O.ef8a4620a7d3a48a9711.otf",
+    "static/media/fa-regular-400.ttf": "/jogo-de-trivia/static/media/fa-regular-400.abf801b7acb6705a15ad.ttf",
+    "static/media/SunnyspellsRegular-MV9ze.otf": "/jogo-de-trivia/static/media/SunnyspellsRegular-MV9ze.5d3e37fefc5faad04ba2.otf",
+    "static/media/trivia.png": "/jogo-de-trivia/static/media/trivia.7e9181d35c0b06d5abc0.png",
+    "static/media/CollegiateheavyoutlineMedium-B0yx.ttf": "/jogo-de-trivia/static/media/CollegiateheavyoutlineMedium-B0yx.254fcdee7e1e92cb6a4e.ttf",
+    "static/media/fa-regular-400.woff2": "/jogo-de-trivia/static/media/fa-regular-400.639d2000c1ece92eaec8.woff2",
+    "static/media/fa-v4compatibility.ttf": "/jogo-de-trivia/static/media/fa-v4compatibility.f601162ae669f88823a3.ttf",
+    "static/media/fa-v4compatibility.woff2": "/jogo-de-trivia/static/media/fa-v4compatibility.745989aab0d69cab7e70.woff2",
+    "index.html": "/jogo-de-trivia/index.html",
+    "main.be4b5d48.css.map": "/jogo-de-trivia/static/css/main.be4b5d48.css.map",
+    "main.c32d4813.js.map": "/jogo-de-trivia/static/js/main.c32d4813.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.be4b5d48.css",
+    "static/js/main.c32d4813.js"
+  ]
+}
