@@ -22,6 +22,12 @@ export default function App() {
           <Route exact path="/settings" component={ Settings } />
           <Route exact path="/feedback" component={ FeedBack } />
           <Route exact path="/ranking" component={ Ranking } />
+
+          <Route exact path="/jogo-de-trivia/" component={ Login } />
+          <Route exact path="/jogo-de-trivia/game" component={ Game } />
+          <Route exact path="/jogo-de-trivia/settings" component={ Settings } />
+          <Route exact path="/jogo-de-trivia/feedback" component={ FeedBack } />
+          <Route exact path="/jogo-de-trivia/ranking" component={ Ranking } />
         </Switch>
       </header>
     </div>
